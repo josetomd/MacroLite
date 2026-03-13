@@ -21,10 +21,10 @@ struct FoodListViewModelTests {
 
         sut.loadData()
 
-        #expect(sut.totalCalories == 400)
-        #expect(sut.totalProteins == 30.0)
-        #expect(sut.totalCarbs == 25.0)
-        #expect(sut.totalFats == 5.0)
+        #expect(sut.nutritionSummary.totalCalories == 400)
+        #expect(sut.nutritionSummary.totalProteins == 30.0)
+        #expect(sut.nutritionSummary.totalCarbs == 25.0)
+        #expect(sut.nutritionSummary.totalFats == 5.0)
     }
 
     @Test func groupedFoods_separatesByMealTypeCorrecty() {

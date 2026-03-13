@@ -13,10 +13,10 @@ struct ContentView: View {
     init(viewModel: FoodListViewModel) {
         self._viewModel = State(initialValue: viewModel)
     }
-    
+
     var body: some View {
         VStack {
-            NutritionHeader(totalCalories: viewModel.totalCalories, totalCarbs: viewModel.totalCarbs, totalProteins: viewModel.totalProteins, totalFats: viewModel.totalFats)
+            NutritionHeader(summary: viewModel.nutritionSummary)
         }
     }
 }

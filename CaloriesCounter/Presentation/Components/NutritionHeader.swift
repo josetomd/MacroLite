@@ -8,22 +8,14 @@
 import SwiftUI
 
 struct NutritionHeader: View {
-    var totalCalories: Int
-    var totalCarbs: Double
-    var totalProteins: Double
-    var totalFats: Double
-
-    let calorieGoal: Double = 2500
-    let carbsGoal: Double = 250
-    let proteinGoal: Double = 140
-    let fatGoal: Double = 70
+    let summary: NutritionSummary
 
     var body: some View {
         VStack(spacing: 25) {
             MacroStatView(
                 title: "Calorías Totales",
-                value: Double(totalCalories),
-                goal: calorieGoal,
+                value: Double(summary.totalCalories),
+                goal: summary.caloriesGoal,
                 color: .primary,
                 unit: "kcal"
             )
@@ -31,9 +23,9 @@ struct NutritionHeader: View {
             .padding(.vertical, 20)
 
             HStack(spacing: 25) {
-                MacroStatView(title: "Carbs", value: totalCarbs, goal: carbsGoal, color: .blue, unit: "g")
-                MacroStatView(title: "Proteína", value: totalProteins, goal: proteinGoal, color: .purple, unit: "g")
-                MacroStatView(title: "Grasas", value: totalFats, goal: fatGoal, color: .orange, unit: "g")
+                MacroStatView(title: "Carbs", value: summary.totalCarbs, goal: summary.carbsGoal, color: .blue, unit: "g")
+                MacroStatView(title: "Proteína", value: summary.totalProteins, goal: summary.proteinGoal, color: .purple, unit: "g")
+                MacroStatView(title: "Grasas", value: summary.totalFats, goal: summary.fatGoal, color: .orange, unit: "g")
             }
         }
         .frame(maxWidth: .infinity)
@@ -43,5 +35,5 @@ struct NutritionHeader: View {
     }
 }
 #Preview {
-    NutritionHeader(totalCalories: 2000, totalCarbs: 250, totalProteins: 140, totalFats: 40)
+    NutritionHeader(summary: .init(totalCalories: 1500, totalCarbs: 140, totalProteins: 65, totalFats: 25))
 }

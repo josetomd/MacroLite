@@ -21,21 +21,14 @@ class FoodListViewModel {
         Dictionary(grouping: allEntries) { $0.mealType }
     }
 
-    var totalCalories: Int {
-        allEntries.reduce(0) { $0 + $1.calories }
-    }
-
-    var totalFats: Double {
-        allEntries.reduce(0) { $0 + $1.fats }
-    }
-
-    var totalCarbs: Double {
-        allEntries.reduce(0) { $0 + $1.carbohydrates }
-    }
-
-    var totalProteins: Double {
-        allEntries.reduce(0) { $0 + $1.proteins }
-    }
+    var nutritionSummary: NutritionSummary {
+            NutritionSummary(
+                totalCalories: allEntries.reduce(0) { $0 + $1.calories },
+                totalCarbs: allEntries.reduce(0) { $0 + $1.carbohydrates },
+                totalProteins: allEntries.reduce(0) { $0 + $1.proteins },
+                totalFats: allEntries.reduce(0) { $0 + $1.fats }
+            )
+        }
 
     init(foodRepository: FoodRepositoryProtocol) {
         self.foodRepository = foodRepository
