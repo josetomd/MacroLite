@@ -32,3 +32,16 @@ struct FoodEntry: Identifiable {
         self.date = date
     }
 }
+
+extension FoodEntry {
+    static var mockList: [FoodEntry] {
+        let tomorrow = Date().addingTimeInterval(86400)
+        let yesterday = Date().addingTimeInterval(-86400)
+        return [
+            .init(name: "Banana", calories: 105, proteins: 1.3, carbohydrates: 27.0, fats: 0.4, grams: 100, amount: 1, mealType: .breakfast, date: Date()),
+            .init(name: "Egg", calories: 78, proteins: 6.0, carbohydrates: 0.0, fats: 5.0, grams: 1, amount: 1, mealType: .breakfast, date: tomorrow),
+            .init(name: "Avocado", calories: 234, proteins: 2.0, carbohydrates: 8.1, fats: 20.0, grams: 100, amount: 1, mealType: .lunch, date: yesterday),
+            .init(name: "Chicken breast", calories: 140, proteins: 27.0, carbohydrates: 0.0, fats: 1.0, grams: 100, amount: 1, mealType: .dinner, date: Date()),
+        ]
+    }
+}
