@@ -15,8 +15,18 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack {
-            NutritionHeader(summary: viewModel.nutritionSummary)
+        NavigationStack {
+            VStack {
+                NutritionHeader(summary: viewModel.nutritionSummary)
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    DateSelectorView(selectedDate: $viewModel.selectedDate)
+                }
+            }
+            .onChange(of: viewModel.selectedDate) { _, _ in
+                viewModel.loadData()
+            }
         }
     }
 }
