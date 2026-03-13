@@ -25,6 +25,18 @@ class FoodListViewModel {
         allEntries.reduce(0) { $0 + $1.calories }
     }
 
+    var totalFats: Double {
+        allEntries.reduce(0) { $0 + $1.fats }
+    }
+
+    var totalCarbs: Double {
+        allEntries.reduce(0) { $0 + $1.carbohydrates }
+    }
+
+    var totalProteins: Double {
+        allEntries.reduce(0) { $0 + $1.proteins }
+    }
+
     init(foodRepository: FoodRepositoryProtocol) {
         self.foodRepository = foodRepository
         loadData()

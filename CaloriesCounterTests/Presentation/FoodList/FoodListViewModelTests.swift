@@ -11,17 +11,20 @@ import Foundation
 
 struct FoodListViewModelTests {
 
-    @Test func totalCalories_isCalculatedCorrecty() {
+    @Test func summaryMacronutrients_areCalculatedCorrecty() {
         let mockRepo = MockFoodRepository()
         let food1 = FoodEntry(name: "Manzana", calories: 100, proteins: 0, carbohydrates: 25, fats: 0, grams: 150, amount: 1, mealType: .snack, date: .now)
         let food2 = FoodEntry(name: "Pollo", calories: 300, proteins: 30, carbohydrates: 0, fats: 5, grams: 200, amount: 1, mealType: .lunch, date: .now)
         mockRepo.foods = [food1, food2]
 
-        let sut = FoodListViewModel(foodRepository: mockRepo) 
+        let sut = FoodListViewModel(foodRepository: mockRepo)
 
         sut.loadData()
 
         #expect(sut.totalCalories == 400)
+        #expect(sut.totalProteins == 30.0)
+        #expect(sut.totalCarbs == 25.0)
+        #expect(sut.totalFats == 5.0)
     }
 
     @Test func groupedFoods_separatesByMealTypeCorrecty() {
@@ -44,14 +47,14 @@ struct FoodListViewModelTests {
         mockRepo.foods = [
             FoodEntry(name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now),
             FoodEntry(name: "Tostada", calories: 150, proteins: 3, carbohydrates: 20, fats: 2, grams: 30, amount: 1, mealType: .breakfast, date: tomorrow)
-            ]
+        ]
 
         let sut = FoodListViewModel(foodRepository: mockRepo)
         sut.loadData()
 
         #expect(sut.allEntries.count == 1)
         #expect(sut.allEntries.first?.name == "Avena")
-        
+
         sut.selectedDate = tomorrow
         sut.loadData()
 
