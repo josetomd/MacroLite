@@ -17,8 +17,9 @@ struct FoodEntry: Identifiable {
     var grams: Double
     var amount: Int
     var mealType: MealType
+    var date: Date
 
-    init(id: UUID = UUID(), name: String, calories: Int, proteins: Double, carbohydrates: Double, fats: Double, grams: Double, amount: Int, mealType: MealType) {
+    init(id: UUID = UUID(), name: String, calories: Int, proteins: Double, carbohydrates: Double, fats: Double, grams: Double, amount: Int, mealType: MealType, date: Date) {
         self.id = id
         self.name = name
         self.calories = calories
@@ -28,5 +29,6 @@ struct FoodEntry: Identifiable {
         self.grams = grams
         self.amount = amount
         self.mealType = mealType
+        self.date = date
     }
 }
