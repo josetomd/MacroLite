@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockFoodRepository: FoodRepositoryProtocol {
+class MockFoodRepository: FoodEntryRepositoryProtocol {
     var foods: [FoodEntry] = []
 
     func save(_ food: FoodEntry) throws {

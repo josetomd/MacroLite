@@ -1,5 +1,5 @@
 //
-//  FoodRepositoryProtocol.swift
+//  FoodEntryRepositoryProtocol.swift
 //  CaloriesCounter
 //
 //  Created by Josset Garcia on 12-03-26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FoodRepositoryProtocol {
+protocol FoodEntryRepositoryProtocol {
     func save(_ food: FoodEntry) throws
     func delete(id: UUID) throws
     func fetchAll() throws -> [FoodEntry]

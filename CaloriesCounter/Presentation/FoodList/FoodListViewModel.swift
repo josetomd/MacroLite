@@ -15,7 +15,7 @@ class FoodListViewModel {
     var showErrorMessage = false
 
     var allEntries: [FoodEntry] = []
-    private let foodRepository: FoodRepositoryProtocol
+    private let foodRepository: FoodEntryRepositoryProtocol
 
     var groupedFoods: [MealType: [FoodEntry]] {
         Dictionary(grouping: allEntries) { $0.mealType }
@@ -30,7 +30,7 @@ class FoodListViewModel {
             )
         }
 
-    init(foodRepository: FoodRepositoryProtocol) {
+    init(foodRepository: FoodEntryRepositoryProtocol) {
         self.foodRepository = foodRepository
         loadData()
     }
