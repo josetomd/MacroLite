@@ -13,7 +13,8 @@ struct MacroStatView: View {
     let value: Double
     let goal: Double
     let color: Color
-    
+    let unit: String
+
     private var progress: Double {
         guard goal > 0 else { return 0 }
         return value / goal
@@ -31,9 +32,14 @@ struct MacroStatView: View {
                     .rotationEffect(.degrees(-90)) // Empezar arriba
                     .animation(.spring, value: value)
                 
-                Text("\(Int(value))g")
-                    .font(.caption)
-                    .fontWeight(.bold)
+                VStack(spacing: 0) {
+                                    Text("\(Int(value))")
+                                        .font(.system(.subheadline, design: .rounded))
+                                        .fontWeight(.bold)
+                                    Text(unit)
+                                        .font(.system(size: 8))
+                                        .foregroundColor(.secondary)
+                                }
             }
             .frame(width: 60, height: 60)
             
@@ -46,5 +52,5 @@ struct MacroStatView: View {
 }
 
 #Preview {
-    MacroStatView(title: "Carbohidratos", value: 250, goal: 340, color: .blue)
+    MacroStatView(title: "Carbohidratos", value: 250, goal: 340, color: .blue, unit: "g")
 }
