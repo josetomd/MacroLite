@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var viewModel: FoodListViewModel
+
+    init(viewModel: FoodListViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            NutritionHeader(totalCalories: viewModel.totalCalories, totalCarbs: viewModel.totalCarbs, totalProteins: viewModel.totalProteins, totalFats: viewModel.totalFats)
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    let mockRepo = MockFoodRepository()
+    ContentView(viewModel: .init(foodRepository: mockRepo))
 }

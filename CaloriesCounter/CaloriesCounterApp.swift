@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct CaloriesCounterApp: App {
+    let mockRepo = MockFoodRepository()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: .init(foodRepository: MockFoodRepository()))
         }
     }
 }
