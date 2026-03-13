@@ -16,8 +16,18 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                NutritionHeader(summary: viewModel.nutritionSummary)
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    NutritionHeader(summary: viewModel.nutritionSummary)
+                    LazyVStack(spacing: 20) {
+                        ForEach(MealType.allCases, id: \.self) { mealType in
+                            MealSectionView(
+                                title: mealType.rawValue,
+                                entries: viewModel.groupedFoods[mealType] ?? []
+                            )
+                        }
+                    }
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
