@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		1F8213F82F63AD7A00EC600E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F8213C92F63A06900EC600E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F8213D02F63A06900EC600E;
+			remoteInfo = CaloriesCounter;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1F8213D12F63A06900EC600E /* CaloriesCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaloriesCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F8213F42F63AD7A00EC600E /* CaloriesCounterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaloriesCounterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = CaloriesCounter;
 			sourceTree = "<group>";
 		};
+		1F8213F52F63AD7A00EC600E /* CaloriesCounterTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CaloriesCounterTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1F8213CE2F63A06900EC600E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F8213F12F63AD7A00EC600E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				1F8213D32F63A06900EC600E /* CaloriesCounter */,
+				1F8213F52F63AD7A00EC600E /* CaloriesCounterTests */,
 				1F8213D22F63A06900EC600E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				1F8213D12F63A06900EC600E /* CaloriesCounter.app */,
+				1F8213F42F63AD7A00EC600E /* CaloriesCounterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 1F8213D12F63A06900EC600E /* CaloriesCounter.app */;
 			productType = "com.apple.product-type.application";
 		};
+		1F8213F32F63AD7A00EC600E /* CaloriesCounterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F8213FA2F63AD7A00EC600E /* Build configuration list for PBXNativeTarget "CaloriesCounterTests" */;
+			buildPhases = (
+				1F8213F02F63AD7A00EC600E /* Sources */,
+				1F8213F12F63AD7A00EC600E /* Frameworks */,
+				1F8213F22F63AD7A00EC600E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F8213F92F63AD7A00EC600E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1F8213F52F63AD7A00EC600E /* CaloriesCounterTests */,
+			);
+			name = CaloriesCounterTests;
+			packageProductDependencies = (
+			);
+			productName = CaloriesCounterTests;
+			productReference = 1F8213F42F63AD7A00EC600E /* CaloriesCounterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					1F8213D02F63A06900EC600E = {
 						CreatedOnToolsVersion = 16.4;
+					};
+					1F8213F32F63AD7A00EC600E = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 1F8213D02F63A06900EC600E;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				1F8213D02F63A06900EC600E /* CaloriesCounter */,
+				1F8213F32F63AD7A00EC600E /* CaloriesCounterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1F8213CF2F63A06900EC600E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F8213F22F63AD7A00EC600E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1F8213F02F63AD7A00EC600E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1F8213F92F63AD7A00EC600E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F8213D02F63A06900EC600E /* CaloriesCounter */;
+			targetProxy = 1F8213F82F63AD7A00EC600E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1F8213DA2F63A06A00EC600E /* Debug */ = {
@@ -298,6 +373,40 @@
 			};
 			name = Release;
 		};
+		1F8213FB2F63AD7A00EC600E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cl.joseto.CaloriesCounterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CaloriesCounter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CaloriesCounter";
+			};
+			name = Debug;
+		};
+		1F8213FC2F63AD7A00EC600E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cl.joseto.CaloriesCounterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CaloriesCounter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CaloriesCounter";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -315,6 +424,15 @@
 			buildConfigurations = (
 				1F8213DD2F63A06A00EC600E /* Debug */,
 				1F8213DE2F63A06A00EC600E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F8213FA2F63AD7A00EC600E /* Build configuration list for PBXNativeTarget "CaloriesCounterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F8213FB2F63AD7A00EC600E /* Debug */,
+				1F8213FC2F63AD7A00EC600E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
