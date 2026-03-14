@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FoodProduct: Identifiable, Codable {
+struct FoodProduct: Identifiable, Codable, Hashable {
     var id: UUID = UUID()
     var name: String
     var calories: Int
