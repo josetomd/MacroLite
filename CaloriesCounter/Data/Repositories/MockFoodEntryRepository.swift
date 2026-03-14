@@ -8,7 +8,7 @@
 import Foundation
 
 class MockFoodProductRepository: FoodProductRepositoryProtocol {
-    private var products: [FoodProduct] = [
+    var products: [FoodProduct] = [
         FoodProduct(name: "Huevo", calories: 155, proteins: 13, carbohydrates: 1.1, fats: 11, grams: 100),
         FoodProduct(name: "Arroz Blanco", calories: 130, proteins: 2.7, carbohydrates: 28, fats: 0.3, grams: 100),
         FoodProduct(name: "Pechuga de Pollo", calories: 165, proteins: 31, carbohydrates: 0, fats: 3.6, grams: 100),
