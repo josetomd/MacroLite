@@ -40,9 +40,11 @@ struct FoodLibraryView: View {
             .navigationTitle(mode == .manage ? "Mis Alimentos" : "Seleccionar")
             .searchable(text: $viewModel.searchText)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cerrar") {
-                        dismiss()
+                if mode == .select {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Cerrar") {
+                            dismiss()
+                        }
                     }
                 }
             }
