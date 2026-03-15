@@ -22,13 +22,13 @@ class FoodListViewModel {
     }
 
     var nutritionSummary: NutritionSummary {
-            NutritionSummary(
-                totalCalories: allEntries.reduce(0) { $0 + $1.totalCalories },
-                totalCarbs: allEntries.reduce(0) { $0 + $1.totalCarbs },
-                totalProteins: allEntries.reduce(0) { $0 + $1.totalProteins },
-                totalFats: allEntries.reduce(0) { $0 + $1.totalFats }
-            )
-        }
+        NutritionSummary(
+            totalCalories: allEntries.reduce(0) { $0 + $1.totalCalories },
+            totalCarbs: allEntries.reduce(0) { $0 + $1.totalCarbs },
+            totalProteins: allEntries.reduce(0) { $0 + $1.totalProteins },
+            totalFats: allEntries.reduce(0) { $0 + $1.totalFats }
+        )
+    }
 
     init(foodRepository: FoodEntryRepositoryProtocol) {
         self.foodRepository = foodRepository

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct FoodDetailView: View {
     @State var viewModel: FoodDetailViewModel
-    @Environment(\.dismiss) var dismiss
 
     var onConfirm: (FoodEntry) -> Void
     
@@ -76,7 +75,6 @@ struct FoodDetailView: View {
                 Button {
                     let newEntry = viewModel.createEntry()
                     onConfirm(newEntry)
-                    dismiss()
                 } label: {
                     Text("Añadir al Diario")
                         .font(.headline)
@@ -89,13 +87,7 @@ struct FoodDetailView: View {
                 .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") { dismiss() }
-                }
-            }
         }
-        .presentationDetents([.medium, .large])
     }
     
     private func summaryItem(label: String, value: String) -> some View {

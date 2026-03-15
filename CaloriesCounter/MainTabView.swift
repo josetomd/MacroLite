@@ -13,7 +13,7 @@ struct MainTabView: View {
     
     var body: some View {
         TabView {
-            ContentView(viewModel: FoodListViewModel(foodRepository: foodRepo))
+            ContentView(viewModel: FoodListViewModel(foodRepository: foodRepo), libraryViewModel: .init(repository: productRepo))
                 .tabItem {
                     Label("Diario", systemImage: "calendar")
                 }
@@ -21,7 +21,9 @@ struct MainTabView: View {
             FoodLibraryView(
                 viewModel: FoodLibraryViewModel(repository: productRepo),
                 mode: .manage
-            )
+            ) { food in
+
+            }
             .tabItem {
                 Label("Alimentos", systemImage: "fork.knife")
             }

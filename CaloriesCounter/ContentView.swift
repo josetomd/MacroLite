@@ -9,8 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State var viewModel: FoodListViewModel
+    @State private var isShowingLibrary = false
 
-    init(viewModel: FoodListViewModel) {
+    let libraryRepo = MockFoodProductRepository()
+    @State private var libraryViewModel: FoodLibraryViewModel
+    init(viewModel: FoodListViewModel, libraryViewModel: FoodLibraryViewModel) {
+        self._libraryViewModel = State(initialValue: libraryViewModel)
         self._viewModel = State(initialValue: viewModel)
     }
 
@@ -30,6 +34,23 @@ struct ContentView: View {
                 }
             }
             .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { isShowingLibrary = true } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title3)
+                    }
+                }
+
+                ToolbarItem(placement: .principal) {
+                    DateSelectorView(selectedDate: $viewModel.selectedDate)
+                }
+            }
+            .fullScreenCover(isPresented: $isShowingLibrary) {
+                FoodLibraryView(viewModel: libraryViewModel, mode: .select) { newEntry in
+                    // viewModel.addEntry(newEntry)
+                }
+            }
+            .toolbar {
                 ToolbarItem(placement: .principal) {
                     DateSelectorView(selectedDate: $viewModel.selectedDate)
                 }
@@ -43,6 +64,7 @@ struct ContentView: View {
 
 #Preview {
     let mockRepo = MockFoodRepository()
+    let productRepo = MockFoodProductRepository()
     let _ = mockRepo.foods = FoodEntry.mockList
-    ContentView(viewModel: .init(foodRepository: mockRepo))
+    ContentView(viewModel: .init(foodRepository: mockRepo), libraryViewModel: .init(repository: productRepo))
 }

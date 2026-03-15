@@ -16,49 +16,50 @@ enum LibraryMode {
 struct FoodLibraryView: View {
     @State var viewModel: FoodLibraryViewModel
     var mode: LibraryMode
-    var onProductSelected: ((FoodProduct) -> Void)? = nil
-
+    var onConfirmEntry: (FoodEntry) -> Void
+    @Environment(\.dismiss) var dismiss
+    @State private var selectedProduct: FoodProduct?
+    
     var body: some View {
         NavigationStack {
             List {
                 ForEach(viewModel.filteredProducts) { product in
-                    productRow(product)
+                    if mode == .select {
+                        Button {
+                            selectedProduct = product
+                        } label: {
+                            FoodProductRow(product: product)
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        FoodProductRow(product: product)
+                    }
                 }
                 .onDelete(perform: mode == .manage ? deleteProduct : nil)
             }
             .navigationTitle(mode == .manage ? "Mis Alimentos" : "Seleccionar")
             .searchable(text: $viewModel.searchText)
             .toolbar {
-                if mode == .manage {
-                    Button(action: {
-                        //TODO: - open form
-                    }) {
-                        Image(systemName: "plus")
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Cerrar") {
+                        dismiss()
                     }
                 }
             }
             .onChange(of: viewModel.searchText) { newText in
                 viewModel.performSearch()
             }
-            .navigationDestination(for: FoodProduct.self) { product in
-                Text("product details")
+            .navigationDestination(item: $selectedProduct) { product in
+                let detailVM = FoodDetailViewModel(product: product)
+                
+                FoodDetailView(viewModel: detailVM) { entry in
+                    onConfirmEntry(entry)
+                    dismiss()
+                }
             }
         }
     }
-
-    @ViewBuilder
-    private func productRow(_ product: FoodProduct) -> some View {
-        if mode == .select {
-            Button { onProductSelected?(product) } label: {
-                FoodProductRow(product: product)
-            }
-        } else {
-            NavigationLink(value: product) {
-                FoodProductRow(product: product)
-            }
-        }
-    }
-
+    
     private func deleteProduct(at offsets: IndexSet) {
         // TODO: - Delete
     }
@@ -67,7 +68,7 @@ struct FoodLibraryView: View {
 #Preview {
     let repo = MockFoodProductRepository()
     NavigationStack {
-        FoodLibraryView(viewModel: .init(repository: repo), mode: .manage) { food in
+        FoodLibraryView(viewModel: .init(repository: repo), mode: .select) { food in
         }
     }
 }
