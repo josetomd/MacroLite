@@ -8,96 +8,153 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct FoodDetailView: View {
     @State var viewModel: FoodDetailViewModel
+    @Environment(\.dismiss) var dismiss
 
     var onConfirm: (FoodEntry) -> Void
-    
+
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 25) {
-                VStack(spacing: 8) {
+        VStack(spacing: 0) {
+            ZStack {
+                LinearGradient(
+                    colors: [Color.accentColor.opacity(0.2), Color.accentColor.opacity(0.05)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+
+                VStack(spacing: 12) {
+                    Image(systemName: "fork.knife.circle.fill")
+                        .font(.system(size: 70))
+                        .foregroundStyle(Color.accentColor)
+                        .shadow(color: .black.opacity(0.1), radius: 10)
+
                     Text(viewModel.product.name)
                         .font(.title.bold())
-                    
-                    Text("\(viewModel.product.calories) kcal por unidad")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-                .padding(.top)
+                        .multilineTextAlignment(.center)
 
-                VStack {
-                    Text("Cantidad")
-                        .font(.headline)
-                    
-                    HStack(spacing: 20) {
-                        Button(action: { if viewModel.selectedAmount > 1 { viewModel.selectedAmount -= 1 } }) {
-                            Image(systemName: "minus.circle.fill")
-                                .font(.system(size: 32))
+                    Text("\(Int(viewModel.product.grams))g por ración")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.top, 40)
+                .padding(.bottom, 30)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+            .padding(.horizontal, 10)
+
+            ScrollView {
+                VStack(spacing: 24) {
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Raciones")
+                            .font(.headline)
+                            .padding(.leading, 5)
+
+                        HStack {
+                            Button(action: { if viewModel.selectedAmount > 1 { viewModel.selectedAmount -= 1 } }) {
+                                Image(systemName: "minus.circle.fill")
+                                    .font(.system(size: 35))
+                                    .foregroundStyle(viewModel.selectedAmount > 1 ? Color.accentColor : .gray)
+                            }
+
+                            Spacer()
+
+                            Text("\(viewModel.selectedAmount)")
+                                .font(.system(size: 45, weight: .bold, design: .rounded))
+
+                            Spacer()
+
+                            Button(action: { viewModel.selectedAmount += 1 }) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 35))
+                                    .foregroundStyle(Color.accentColor)
+                            }
                         }
-                        
-                        Text("\(viewModel.selectedAmount)")
-                            .font(.system(size: 40, weight: .bold, design: .rounded))
-                            .frame(minWidth: 60)
-                        
-                        Button(action: { viewModel.selectedAmount += 1 }) {
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 32))
+                        .padding(.horizontal, 30)
+                        .padding(.vertical, 15)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(20)
+                    }
+
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Momento del día")
+                            .font(.headline)
+                            .padding(.leading, 5)
+
+                        Picker("Momento", selection: $viewModel.selectedMealType) {
+                            ForEach(MealType.allCases, id: \.self) { type in
+                                Text(type.rawValue).tag(type)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+
+                    VStack(spacing: 15) {
+                        Text("Total a registrar")
+                            .font(.subheadline.bold())
+                            .foregroundStyle(.secondary)
+
+                        HStack(spacing: 20) {
+                            nutritionBadge(label: "Calorías", value: "\(viewModel.product.calories * viewModel.selectedAmount)", color: .primary)
+                            nutritionBadge(label: "Proteínas", value: "\(Int(viewModel.product.proteins * Double(viewModel.selectedAmount)))g", color: .purple)
+                            nutritionBadge(label: "Carbs", value: "\(Int(viewModel.product.carbohydrates * Double(viewModel.selectedAmount)))g", color: .blue)
+                            nutritionBadge(label: "Grasas", value: "\(Int(viewModel.product.fats * Double(viewModel.selectedAmount)))g", color: .orange)
                         }
                     }
                     .padding()
-                    .background(Color.secondary.opacity(0.1))
-                    .cornerRadius(15)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.accentColor.opacity(0.05))
+                    .cornerRadius(20)
                 }
+                .padding(20)
+            }
 
-                Picker("Meal", selection: $viewModel.selectedMealType) {
-                    ForEach(MealType.allCases, id: \.self) { type in
-                        Text(type.rawValue).tag(type)
+            Button {
+                let entry = viewModel.createEntry()
+                onConfirm(entry)
+            } label: {
+                HStack {
+                    Text("Confirmar Selección")
+                        .fontWeight(.bold)
+                    Image(systemName: "checkmark.circle.fill")
+                }
+                .font(.headline)
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.accentColor)
+                .cornerRadius(18)
+                .shadow(color: Color.accentColor.opacity(0.3), radius: 10, y: 5)
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 10)
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button { dismiss() } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: "chevron.left")
+                        Text("Atrás")
                     }
                 }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-
-                Spacer()
-
-                HStack(spacing: 30) {
-                    summaryItem(label: "Calorías", value: "\(viewModel.product.calories * viewModel.selectedAmount)")
-                    summaryItem(label: "Grasas", value: "\(Int(viewModel.product.grams * Double(viewModel.selectedAmount)))g")
-                    summaryItem(label: "Carbs", value: "\(Int(viewModel.product.carbohydrates * Double(viewModel.selectedAmount)))g")
-                    summaryItem(label: "Proteins", value: "\(Int(viewModel.product.proteins * Double(viewModel.selectedAmount)))g")
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.accentColor.opacity(0.05))
-                .cornerRadius(12)
-                .padding(.horizontal)
-
-                Button {
-                    let newEntry = viewModel.createEntry()
-                    onConfirm(newEntry)
-                } label: {
-                    Text("Añadir al Diario")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.accentColor)
-                        .cornerRadius(15)
-                }
-                .padding()
             }
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
-    
-    private func summaryItem(label: String, value: String) -> some View {
-        VStack {
+
+    private func nutritionBadge(label: String, value: String, color: Color) -> some View {
+        VStack(spacing: 4) {
             Text(value)
                 .font(.headline)
+                .foregroundStyle(color)
             Text(label)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
