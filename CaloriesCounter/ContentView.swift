@@ -47,7 +47,7 @@ struct ContentView: View {
             }
             .fullScreenCover(isPresented: $isShowingLibrary) {
                 FoodLibraryView(viewModel: libraryViewModel, mode: .select) { newEntry in
-                    // viewModel.addEntry(newEntry)
+                     viewModel.addEntry(newEntry)
                 }
             }
             .toolbar {

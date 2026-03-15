@@ -39,8 +39,24 @@ class FoodListViewModel {
         do {
             self.allEntries = try foodRepository.fetch(for: selectedDate)
         } catch {
-            self.errorMessage = "Couldn't load foods"
-            self.showErrorMessage = true
+            handleError(error)
         }
+    }
+
+    func addEntry(_ entry: FoodEntry) {
+        var finalEntry = entry
+        finalEntry.date = selectedDate
+
+        do {
+            try foodRepository.save(finalEntry)
+        } catch {
+            handleError(error)
+        }
+        loadData()
+    }
+
+    private func handleError(_ error: Error) {
+        self.errorMessage = error.localizedDescription
+        self.showErrorMessage = true
     }
 }
