@@ -52,6 +52,19 @@ struct FoodEntry: Identifiable {
         self.date = date
     }
     
+    init(from product: FoodProduct, amount: Int, mealType: MealType) {
+        self.id = UUID()
+        self.name = product.name
+        self.calories = product.calories
+        self.proteins = product.proteins
+        self.carbohydrates = product.carbohydrates
+        self.fats = product.fats
+        self.grams = product.grams
+        self.amount = amount
+        self.mealType = mealType
+        self.date = Date()
+
+    }
 }
 
 extension FoodEntry {
