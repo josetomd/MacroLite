@@ -19,6 +19,26 @@ struct FoodEntry: Identifiable {
     var mealType: MealType
     var date: Date
 
+    var totalCalories: Int {
+        calories * amount
+    }
+
+    var totalProteins: Double {
+        proteins * Double(amount)
+    }
+
+    var totalCarbs: Double {
+        carbohydrates * Double(amount)
+    }
+
+    var totalFats: Double {
+        fats * Double(amount)
+    }
+
+    var totalGrams: Double {
+        grams * Double(amount)
+    }
+
     init(id: UUID = UUID(), name: String, calories: Int, proteins: Double, carbohydrates: Double, fats: Double, grams: Double, amount: Int, mealType: MealType, date: Date) {
         self.id = id
         self.name = name
@@ -31,6 +51,7 @@ struct FoodEntry: Identifiable {
         self.mealType = mealType
         self.date = date
     }
+    
 }
 
 extension FoodEntry {
