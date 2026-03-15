@@ -23,10 +23,10 @@ class FoodListViewModel {
 
     var nutritionSummary: NutritionSummary {
             NutritionSummary(
-                totalCalories: allEntries.reduce(0) { $0 + $1.calories },
-                totalCarbs: allEntries.reduce(0) { $0 + $1.carbohydrates },
-                totalProteins: allEntries.reduce(0) { $0 + $1.proteins },
-                totalFats: allEntries.reduce(0) { $0 + $1.fats }
+                totalCalories: allEntries.reduce(0) { $0 + $1.totalCalories },
+                totalCarbs: allEntries.reduce(0) { $0 + $1.totalCarbs },
+                totalProteins: allEntries.reduce(0) { $0 + $1.totalProteins },
+                totalFats: allEntries.reduce(0) { $0 + $1.totalFats }
             )
         }
 
