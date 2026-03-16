@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FoodEntry: Identifiable {
+struct FoodEntry: Identifiable, Hashable {
     var id: UUID = UUID()
     var name: String
     var calories: Int
@@ -51,9 +51,9 @@ struct FoodEntry: Identifiable {
         self.mealType = mealType
         self.date = date
     }
-    
-    init(from product: FoodProduct, amount: Int, mealType: MealType) {
-        self.id = UUID()
+
+    init(id: UUID = UUID(), from product: FoodProduct, amount: Int, mealType: MealType) {
+        self.id = id
         self.name = product.name
         self.calories = product.calories
         self.proteins = product.proteins

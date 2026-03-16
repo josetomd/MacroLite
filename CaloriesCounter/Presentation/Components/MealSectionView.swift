@@ -10,7 +10,7 @@ import SwiftUI
 struct MealSectionView: View {
     let title: String
     let entries: [FoodEntry]
-    
+    @Binding var selectedEntry: FoodEntry?
     var totalCalories: Int {
         entries.reduce(0) { $0 + $1.calories }
     }
@@ -37,6 +37,9 @@ struct MealSectionView: View {
                 } else {
                     ForEach(entries) { food in
                         FoodRowView(food: food)
+                            .onTapGesture {
+                                selectedEntry = food
+                            }
                         if food.id != entries.last?.id {
                             Divider().padding(.leading, 0)
                         }
@@ -53,5 +56,6 @@ struct MealSectionView: View {
 }
 
 #Preview {
-    MealSectionView(title: "Breakfast", entries: FoodEntry.mockList)
+    @Previewable @State var selectedEntry: FoodEntry? = FoodEntry.mockList.first!
+    MealSectionView(title: "Breakfast", entries: FoodEntry.mockList, selectedEntry: $selectedEntry)
 }

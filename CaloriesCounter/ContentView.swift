@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State var viewModel: FoodListViewModel
     @State private var isShowingLibrary = false
+    @State private var entryToEdit: FoodEntry?
 
-    let libraryRepo = MockFoodProductRepository()
     @State private var libraryViewModel: FoodLibraryViewModel
     init(viewModel: FoodListViewModel, libraryViewModel: FoodLibraryViewModel) {
         self._libraryViewModel = State(initialValue: libraryViewModel)
@@ -27,7 +27,8 @@ struct ContentView: View {
                         ForEach(MealType.allCases, id: \.self) { mealType in
                             MealSectionView(
                                 title: mealType.rawValue,
-                                entries: viewModel.groupedFoods[mealType] ?? []
+                                entries: viewModel.groupedFoods[mealType] ?? [],
+                                selectedEntry: $entryToEdit
                             )
                         }
                     }
@@ -47,7 +48,7 @@ struct ContentView: View {
             }
             .fullScreenCover(isPresented: $isShowingLibrary) {
                 FoodLibraryView(viewModel: libraryViewModel, mode: .select) { newEntry in
-                     viewModel.addEntry(newEntry)
+                    viewModel.addEntry(newEntry)
                 }
             }
             .toolbar {
@@ -57,6 +58,29 @@ struct ContentView: View {
             }
             .onChange(of: viewModel.selectedDate) { _, _ in
                 viewModel.loadData()
+            }
+            .sheet(item: $entryToEdit) { entry in
+                let product = FoodProduct(
+                    id: UUID(),
+                    name: entry.name,
+                    calories: entry.calories,
+                    proteins: entry.proteins,
+                    carbohydrates: entry.carbohydrates,
+                    fats: entry.fats,
+                    grams: entry.grams
+                )
+
+                let detailVM = FoodDetailViewModel(
+                    product: product,
+                    amount: entry.amount,
+                    mealType: entry.mealType,
+                    entryId: entry.id
+                )
+
+                FoodDetailView(viewModel: detailVM) { updatedEntry in
+                    viewModel.updateEntry(updatedEntry)
+                    entryToEdit = nil
+                }
             }
         }
     }

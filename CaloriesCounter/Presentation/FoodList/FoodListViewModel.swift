@@ -55,6 +55,15 @@ class FoodListViewModel {
         loadData()
     }
 
+    func updateEntry(_ entry: FoodEntry) {
+        do {
+            try foodRepository.update(entry)
+        } catch {
+            handleError(error)
+        }
+        loadData()
+    }
+
     private func handleError(_ error: Error) {
         self.errorMessage = error.localizedDescription
         self.showErrorMessage = true

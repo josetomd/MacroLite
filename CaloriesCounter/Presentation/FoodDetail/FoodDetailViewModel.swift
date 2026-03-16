@@ -14,13 +14,27 @@ class FoodDetailViewModel {
     let product: FoodProduct
     var selectedAmount: Int = 1
     var selectedMealType: MealType
+    let entryId: UUID?
 
-    init(product: FoodProduct, mealType: MealType = .breakfast) {
-        self.product = product
-        self.selectedMealType = mealType
+    var isEditing: Bool {
+        entryId != nil
     }
 
+    init(product: FoodProduct,
+             amount: Int = 1,
+             mealType: MealType = .breakfast,
+             entryId: UUID? = nil) {
+            self.product = product
+            self.selectedAmount = amount
+            self.selectedMealType = mealType
+            self.entryId = entryId
+        }
+
     func createEntry() -> FoodEntry {
-        return FoodEntry(from: product, amount: selectedAmount, mealType: selectedMealType)
+        if let id = entryId {
+            return FoodEntry(id: id, from: product, amount: selectedAmount, mealType: selectedMealType)
+        } else {
+            return FoodEntry(from: product, amount: selectedAmount, mealType: selectedMealType)
+        }
     }
 }

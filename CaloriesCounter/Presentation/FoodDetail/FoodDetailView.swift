@@ -116,7 +116,7 @@ struct FoodDetailView: View {
                 onConfirm(entry)
             } label: {
                 HStack {
-                    Text("Confirmar Selección")
+                    Text(viewModel.isEditing ? "Actualizar" : "Confirmar Selección")
                         .fontWeight(.bold)
                     Image(systemName: "checkmark.circle.fill")
                 }
@@ -159,7 +159,9 @@ struct FoodDetailView: View {
 }
 
 #Preview {
-    FoodDetailView(viewModel: .init(product: .init(name: "Pancake", calories: 200, proteins: 130, carbohydrates: 20, fats: 30, grams: 100))) { entry in
+    NavigationStack {
+        FoodDetailView(viewModel: .init(product: .init(name: "Pancake", calories: 200, proteins: 130, carbohydrates: 20, fats: 30, grams: 100))) { entry in
 
+        }
     }
 }
