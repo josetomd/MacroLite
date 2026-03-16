@@ -47,7 +47,7 @@ struct FoodProductFormView: View {
                         }
 
                     HStack {
-                        Text("Base:")
+                        Text("Cada:")
                         TextField("100", text: $viewModel.grams)
                             .frame(width: 50)
                             .keyboardType(.numberPad)
