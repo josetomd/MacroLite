@@ -13,67 +13,177 @@ struct MacroBreakdownView: View {
 
     var body: some View {
         ZStack {
-            Color(.systemBackground)
+            Rectangle()
+                .fill(.ultraThinMaterial)
                 .ignoresSafeArea()
 
-            LinearGradient(colors: [viewModel.macroType.color.opacity(0.15), .clear], startPoint: .top, endPoint: .bottom)
+            LinearGradient(
+                colors: [viewModel.macroType.color.opacity(0.2), .clear],
+                startPoint: .top,
+                endPoint: .center
+            )
             .ignoresSafeArea()
 
-            VStack(spacing: 20) {
+            VStack(spacing: 0) {
                 headerSection
+                    .padding(.bottom, 30)
 
-                List {
-                    ForEach(viewModel.filteredEntries) { entry in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
                         HStack {
-                            VStack(alignment: .leading) {
-                                Text(entry.name).font(.headline)
-                                Text(entry.mealType.rawValue).font(.caption).foregroundStyle(.secondary)
-                            }
+                            Text("Fuentes principales")
+                                .font(.headline)
                             Spacer()
-                            Text("\(Int(entry.value(for: viewModel.macroType)))\(viewModel.macroType.unit)")
-                                .fontWeight(.bold)
-                                .foregroundStyle(viewModel.macroType.color)
+                            Text("\(viewModel.filteredEntries.count) registros")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
+                        .padding(.horizontal, 25)
+
+                        VStack(spacing: 12) {
+                            ForEach(viewModel.filteredEntries) { entry in
+                                MacroBreakdownRow(
+                                    entry: entry,
+                                    macroType: viewModel.macroType,
+                                    maxTotalValue: viewModel.totalValue,
+                                    animFactor: viewModel.appearanceProgress
+                                )
+                            }
+                        }
+                        .padding(.horizontal, 20)
+
+                        Color.clear.frame(height: 100)
                     }
                 }
-                .listStyle(.plain)
-                .background(Color.clear)
             }
         }
     }
 
     private var headerSection: some View {
-        HStack(spacing: 20) {
-            ZStack {
-                Circle()
-                    .stroke(viewModel.macroType.color.opacity(0.2), lineWidth: 10)
-                Circle()
-                    .trim(from: 0, to: 0.7) // Simulación de progreso
-                    .stroke(viewModel.macroType.color, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                    .rotationEffect(.degrees(-90))
+        VStack(spacing: 20) {
+            HStack {
+                Spacer()
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 14, weight: .bold))
+                        .padding(10)
+                        .background(.secondary.opacity(0.2))
+                        .clipShape(Circle())
+                        .foregroundStyle(.primary)
+                }
             }
-            .frame(width: 80, height: 80)
+            .padding(.horizontal, 25)
 
-            VStack(alignment: .leading) {
-                Text(viewModel.macroType.rawValue)
-                    .font(.title.bold())
-                Text("Total: \(Int(viewModel.totalValue)) \(viewModel.macroType.unit)")
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
+            HStack(spacing: 25) {
+                ZStack {
+                    Circle()
+                        .stroke(viewModel.macroType.color.opacity(0.1), lineWidth: 12)
+
+                    Circle()
+                        .trim(from: 0, to: viewModel.completionPercentage * viewModel.appearanceProgress)
+                        .stroke(
+                            viewModel.macroType.color,
+                            style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                        )
+                        .rotationEffect(.degrees(-90))
+
+                    Image(systemName: iconForMacro(viewModel.macroType))
+                        .font(.title2)
+                        .foregroundStyle(viewModel.macroType.color)
+                        .opacity(viewModel.appearanceProgress)
+                }
+                .frame(width: 90, height: 90)
+                .shadow(color: viewModel.macroType.color.opacity(0.3 * viewModel.appearanceProgress), radius: 10)
+                .onAppear {
+                    withAnimation(.spring(response: 1.0, dampingFraction: 0.7)) {
+                        viewModel.appearanceProgress = 1.0
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(viewModel.macroType.rawValue.uppercased())
+                        .font(.caption)
+                        .bold()
+                        .tracking(2)
+                        .foregroundStyle(.secondary)
+
+                    Text("\(Int(viewModel.totalValue))")
+                        .font(.system(size: 40, weight: .black, design: .rounded))
+
+                    Text(viewModel.macroType.unit)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
             }
-
-            Spacer()
-
-            Button(action: onClose) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title)
-                    .foregroundStyle(.secondary)
-            }
+            .padding(.horizontal, 30)
         }
-        .padding(.horizontal, 25)
-        .padding(.top, 20)
+        .padding(.top, 10)
+    }
+
+    private func iconForMacro(_ type: MacroType) -> String {
+        switch type {
+        case .calories: return "flame.fill"
+        case .protein: return "leaf.fill"
+        case .carbs: return "fork.knife"
+        case .fats: return "drop.fill"
+        }
     }
 }
+
+struct MacroBreakdownRow: View {
+    let entry: FoodEntry
+    let macroType: MacroType
+    let maxTotalValue: Double
+    let animFactor: Double
+
+    var body: some View {
+        let value = entry.value(for: macroType)
+        let percentage = maxTotalValue > 0 ? (value / maxTotalValue) : 0
+
+        VStack(spacing: 8) {
+            HStack(alignment: .center) {
+                Text("\(entry.amount)x")
+                    .font(.caption.bold())
+                    .padding(6)
+                    .background(macroType.color.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .foregroundStyle(macroType.color)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(entry.name)
+                        .font(.subheadline.bold())
+                    Text(entry.mealType.rawValue)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Text("\(Int(value))\(macroType.unit)")
+                    .font(.system(.subheadline, design: .rounded))
+                    .bold()
+                    .foregroundStyle(macroType.color)
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.secondary.opacity(0.1))
+
+                    Capsule()
+                        .fill(macroType.color)
+                        .frame(width: geo.size.width * CGFloat(percentage) * CGFloat(animFactor))
+                }
+            }
+            .frame(height: 6)
+        }
+        .padding()
+        .background(Color(.secondarySystemBackground).opacity(0.4))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+}
+
 
 #Preview {
     MacroBreakdownView(viewModel: .init(macroType: .calories, entries: FoodEntry.mockList)) {
