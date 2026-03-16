@@ -48,4 +48,22 @@ struct FoodProductFormViewModelTests {
         #expect(sut.fats == "0.2")
         #expect(sut.grams == "100")
     }
+
+    @Test func givenExistingFood_save_updatesProductInRepository() throws {
+        let repositoryMock = MockFoodProductRepository()
+        let product = FoodProduct(name: "Manzana", calories: 52, proteins: 0.3, carbohydrates: 14, fats: 0.2, grams: 100)
+        
+        repositoryMock.products = [product]
+        
+        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product)
+
+        sut.name = "Manzana Roja"
+        sut.calories = "32"
+        sut.save()
+
+        let foodUpdated = repositoryMock.products.first!
+        #expect(repositoryMock.updateWasCalled == true)
+        #expect(foodUpdated.name == "Manzana Roja")
+        #expect(foodUpdated.calories == 32)
+    }
 }

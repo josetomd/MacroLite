@@ -13,12 +13,12 @@ class FoodProductFormViewModel {
     var showError: Bool = false
 
     var name: String = ""
-    var calories: String = "" 
+    var calories: String = ""
     var proteins: String = ""
     var carbs: String = ""
     var fats: String = ""
     var grams: String = ""
-    
+
     private let repository: FoodProductRepositoryProtocol
     private var existingProduct: FoodProduct?
 
@@ -36,20 +36,33 @@ class FoodProductFormViewModel {
     }
 
     func save()  {
-        let newProduct = FoodProduct(
-            id: existingProduct?.id ?? UUID(),
-            name: name,
-            calories: Int(calories) ?? 0,
-            proteins: Double(proteins) ?? 0,
-            carbohydrates: Double(carbs) ?? 0,
-            fats: Double(fats) ?? 0,
-            grams: Double(grams) ?? 100
-        )
         do {
-            try repository.saveProduct(newProduct)
+            if existingProduct != nil {
+                existingProduct?.name = name
+                existingProduct?.calories = Int(calories) ?? 0
+                existingProduct?.proteins = Double(proteins) ?? 0
+                existingProduct?.carbohydrates = Double(carbs) ?? 0
+                existingProduct?.fats = Double(fats) ?? 0
+                existingProduct?.grams = Double(grams) ?? 100
+
+                try repository.updateProduct(existingProduct!)
+
+            } else {
+                let newProduct = FoodProduct(
+                    id: existingProduct?.id ?? UUID(),
+                    name: name,
+                    calories: Int(calories) ?? 0,
+                    proteins: Double(proteins) ?? 0,
+                    carbohydrates: Double(carbs) ?? 0,
+                    fats: Double(fats) ?? 0,
+                    grams: Double(grams) ?? 100
+                )
+                try repository.saveProduct(newProduct)
+            }
         } catch {
             errorMessage = error.localizedDescription
             showError = true
         }
     }
+
 }

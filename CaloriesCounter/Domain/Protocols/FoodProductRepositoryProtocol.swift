@@ -12,4 +12,5 @@ protocol FoodProductRepositoryProtocol {
     func searchProducts(query: String) throws -> [FoodProduct]
     func saveProduct(_ food: FoodProduct) throws -> Void
     func deleteProduct(id: UUID) throws -> Void
+    func updateProduct(_ food: FoodProduct) throws -> Void
 }

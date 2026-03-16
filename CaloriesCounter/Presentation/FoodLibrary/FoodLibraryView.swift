@@ -19,6 +19,7 @@ struct FoodLibraryView: View {
     var onConfirmEntry: ((FoodEntry) -> Void)?
     @Environment(\.dismiss) var dismiss
     @State private var selectedProduct: FoodProduct?
+    @State private var productToEdit: FoodProduct?
     @State private var isShowingForm = false
 
     var body: some View {
@@ -34,7 +35,13 @@ struct FoodLibraryView: View {
                         .buttonStyle(.plain)
                     } else {
                         // TODO: - Navigate to Edit product
-                        FoodProductRow(product: product)
+                        Button {
+                            productToEdit = product
+                            isShowingForm = true
+                        } label: {
+                            FoodProductRow(product: product)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .onDelete(perform: mode == .manage ? deleteProduct : nil)
@@ -70,7 +77,7 @@ struct FoodLibraryView: View {
                 }
             }
             .sheet(isPresented: $isShowingForm) {
-                let formVM = FoodProductFormViewModel(repository: viewModel.getFoodProductRepository())
+                let formVM = FoodProductFormViewModel(repository: viewModel.getFoodProductRepository(), product: productToEdit)
 
                 FoodProductFormView(viewModel: formVM) {
                     viewModel.loadInitialProducts()

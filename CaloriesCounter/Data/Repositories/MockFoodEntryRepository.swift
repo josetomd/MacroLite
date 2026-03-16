@@ -15,6 +15,8 @@ class MockFoodProductRepository: FoodProductRepositoryProtocol {
         FoodProduct(name: "Avena", calories: 389, proteins: 16.9, carbohydrates: 66, fats: 6.9, grams: 100)
     ]
 
+    var updateWasCalled = false
+
     func fetchProducts() throws -> [FoodProduct] {
         return products
     }
@@ -29,5 +31,12 @@ class MockFoodProductRepository: FoodProductRepositoryProtocol {
     }
     func deleteProduct(id: UUID) throws {
         products.removeAll { $0.id == id }
+    }
+
+    func updateProduct(_ product: FoodProduct) throws {
+        updateWasCalled = true
+        if let index = products.firstIndex(where: { $0.id == product.id }) {
+            products[index] = product
+        }
     }
 }
