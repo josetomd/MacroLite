@@ -78,4 +78,13 @@ extension FoodEntry {
             .init(name: "Chicken breast", calories: 140, proteins: 27.0, carbohydrates: 0.0, fats: 1.0, grams: 100, amount: 1, mealType: .dinner, date: Date()),
         ]
     }
+
+    func value(for macro: MacroType) -> Double {
+        switch macro {
+        case .calories: return Double(self.totalCalories)
+        case .protein: return self.totalProteins
+        case .carbs: return self.totalCarbs
+        case .fats: return self.totalFats
+        }
+    }
 }
