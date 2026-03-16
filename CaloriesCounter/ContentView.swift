@@ -103,7 +103,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    let mockRepo = MockFoodRepository()
+    let mockRepo = MockFoodEntryRepository()
     let productRepo = MockFoodProductRepository()
     let _ = mockRepo.foods = FoodEntry.mockList
     ContentView(viewModel: .init(foodRepository: mockRepo), libraryViewModel: .init(repository: productRepo))

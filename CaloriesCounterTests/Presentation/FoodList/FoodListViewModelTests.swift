@@ -12,7 +12,7 @@ import Foundation
 struct FoodListViewModelTests {
 
     @Test func summaryMacronutrients_areCalculatedCorrecty() {
-        let mockRepo = MockFoodRepository()
+        let mockRepo = MockFoodEntryRepository()
         let food1 = FoodEntry(name: "Manzana", calories: 100, proteins: 0, carbohydrates: 25, fats: 0, grams: 150, amount: 1, mealType: .snack, date: .now)
         let food2 = FoodEntry(name: "Pollo", calories: 300, proteins: 30, carbohydrates: 0, fats: 5, grams: 200, amount: 1, mealType: .lunch, date: .now)
         mockRepo.foods = [food1, food2]
@@ -28,7 +28,7 @@ struct FoodListViewModelTests {
     }
 
     @Test func groupedFoods_separatesByMealTypeCorrecty() {
-        let mockRepo = MockFoodRepository()
+        let mockRepo = MockFoodEntryRepository()
         mockRepo.foods = [
             FoodEntry(name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now),
             FoodEntry(name: "Tostada", calories: 150, proteins: 3, carbohydrates: 20, fats: 2, grams: 30, amount: 1, mealType: .breakfast, date: .now)
@@ -42,7 +42,7 @@ struct FoodListViewModelTests {
     }
 
     @Test func selectedDate_FetchFoodsByDateCorrectly() {
-        let mockRepo = MockFoodRepository()
+        let mockRepo = MockFoodEntryRepository()
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         mockRepo.foods = [
             FoodEntry(name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now),
@@ -63,7 +63,7 @@ struct FoodListViewModelTests {
     }
 
     @Test func givenIndexToDelete_deleteEntry_callsDeleteFromRepository() {
-        let mockRepo = MockFoodRepository()
+        let mockRepo = MockFoodEntryRepository()
         let id = UUID()
         let avena = FoodEntry(id: id, name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now)
         mockRepo.foods = [avena]

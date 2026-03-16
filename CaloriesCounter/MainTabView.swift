@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var foodRepo = MockFoodRepository()
-    @State private var productRepo = MockFoodProductRepository()
-    
+    @State private var entryRepo: FoodEntryRepositoryProtocol
+    @State private var productRepo: FoodProductRepositoryProtocol
+
+    init(entryRepo: FoodEntryRepositoryProtocol, productRepo: FoodProductRepositoryProtocol) {
+        self._entryRepo = State(initialValue: entryRepo)
+        self._productRepo = State(initialValue: productRepo)
+    }
     var body: some View {
         TabView {
-            ContentView(viewModel: FoodListViewModel(foodRepository: foodRepo), libraryViewModel: .init(repository: productRepo))
+            ContentView(viewModel: FoodListViewModel(foodRepository: entryRepo), libraryViewModel: .init(repository: productRepo))
                 .tabItem {
                     Label("Diario", systemImage: "calendar")
                 }
@@ -21,9 +25,7 @@ struct MainTabView: View {
             FoodLibraryView(
                 viewModel: FoodLibraryViewModel(repository: productRepo),
                 mode: .manage
-            ) { food in
-
-            }
+            )
             .tabItem {
                 Label("Alimentos", systemImage: "fork.knife")
             }
@@ -32,5 +34,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView()
+    MainTabView(entryRepo: MockFoodEntryRepository(), productRepo: MockFoodProductRepository())
 }

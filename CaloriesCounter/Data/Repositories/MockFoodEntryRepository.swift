@@ -1,5 +1,5 @@
 //
-//  MockFoodRepository.swift
+//  MockFoodEntryRepository.swift
 //  CaloriesCounter
 //
 //  Created by Josset Garcia on 12-03-26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockFoodRepository: FoodEntryRepositoryProtocol {
+class MockFoodEntryRepository: FoodEntryRepositoryProtocol {
     var foods: [FoodEntry] = []
     var deleteWasCalled = false
 
