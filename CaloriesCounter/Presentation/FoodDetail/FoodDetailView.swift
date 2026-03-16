@@ -61,15 +61,21 @@ struct FoodDetailView: View {
 
                             Spacer()
 
-                            TextField("", value: $viewModel.selectedAmount, formatter: NumberFormatter())
-                                .font(.system(size: 45, weight: .bold, design: .rounded))
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.center)
-                                .focused($isAmountFocused)
-                                .frame(width: 100)
-                                .onSubmit {
-                                    if viewModel.selectedAmount < 1 { viewModel.selectedAmount = 1 }
-                                }
+                            VStack(spacing: 0) {
+                                TextField("", value: $viewModel.selectedAmount, formatter: NumberFormatter())
+                                    .font(.system(size: 45, weight: .bold, design: .rounded))
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.center)
+                                    .focused($isAmountFocused)
+                                    .frame(width: 100)
+                                    .onSubmit {
+                                        if viewModel.selectedAmount < 1 { viewModel.selectedAmount = 1 }
+                                    }
+                                Text("= \(Int(viewModel.totalGrams)) g totales")
+                                    .font(.subheadline.bold())
+                                    .foregroundStyle(.secondary)
+                                    .padding(.top, -5)
+                            }
 
                             Spacer()
 

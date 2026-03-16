@@ -20,15 +20,19 @@ class FoodDetailViewModel {
         entryId != nil
     }
 
+    var totalGrams: Double {
+        product.grams * Double(selectedAmount)
+    }
+
     init(product: FoodProduct,
-             amount: Int = 1,
-             mealType: MealType = .breakfast,
-             entryId: UUID? = nil) {
-            self.product = product
-            self.selectedAmount = amount
-            self.selectedMealType = mealType
-            self.entryId = entryId
-        }
+         amount: Int = 1,
+         mealType: MealType = .breakfast,
+         entryId: UUID? = nil) {
+        self.product = product
+        self.selectedAmount = amount
+        self.selectedMealType = mealType
+        self.entryId = entryId
+    }
 
     func createEntry() -> FoodEntry {
         if let id = entryId {
