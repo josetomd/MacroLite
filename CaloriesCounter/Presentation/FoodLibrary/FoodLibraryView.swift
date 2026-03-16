@@ -87,6 +87,9 @@ struct FoodLibraryView: View {
                     viewModel.loadInitialProducts()
                 }
             }
+            .onAppear {
+                viewModel.loadInitialProducts()
+            }
         }
     }
 
