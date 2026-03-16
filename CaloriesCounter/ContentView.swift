@@ -80,6 +80,9 @@ struct ContentView: View {
                 FoodDetailView(viewModel: detailVM) { updatedEntry in
                     viewModel.updateEntry(updatedEntry)
                     entryToEdit = nil
+                } onDelete: { id in
+                    viewModel.deleteEntry(id: id)
+                    entryToEdit = nil
                 }
             }
         }

@@ -13,8 +13,10 @@ import SwiftUI
 struct FoodDetailView: View {
     @State var viewModel: FoodDetailViewModel
     @Environment(\.dismiss) var dismiss
+    @State private var isShowingDeleteConfirmation = false
 
     var onConfirm: (FoodEntry) -> Void
+    var onDelete: ((UUID) -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -130,6 +132,19 @@ struct FoodDetailView: View {
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 10)
+
+            if viewModel.isEditing {
+                Button(role: .destructive) {
+                    if let id = viewModel.entryId {
+                        isShowingDeleteConfirmation = true
+                    }
+                } label: {
+                    Text("Eliminar ración")
+                        .fontWeight(.medium)
+                        .foregroundColor(.red)
+                        .padding()
+                }
+            }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -141,6 +156,15 @@ struct FoodDetailView: View {
                     }
                 }
             }
+        }
+        .alert("¿Eliminar Alimento?", isPresented: $isShowingDeleteConfirmation) {
+            Button("Eliminar", role: .destructive) {
+                onDelete?(viewModel.entryId!)
+                dismiss()
+            }
+            Button("Cancelar", role: .cancel) { }
+        } message: {
+            Text("Esta acción eliminará la comida del diario")
         }
     }
 

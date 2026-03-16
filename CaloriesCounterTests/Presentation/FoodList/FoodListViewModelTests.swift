@@ -61,4 +61,19 @@ struct FoodListViewModelTests {
         #expect(sut.allEntries.count == 1)
         #expect(sut.allEntries.first?.name == "Tostada")
     }
+
+    @Test func givenIndexToDelete_deleteEntry_callsDeleteFromRepository() {
+        let mockRepo = MockFoodRepository()
+        let id = UUID()
+        let avena = FoodEntry(id: id, name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now)
+        mockRepo.foods = [avena]
+
+        let sut = FoodListViewModel(foodRepository: mockRepo)
+        sut.loadData()
+
+        sut.deleteEntry(id: id)
+
+        #expect(mockRepo.deleteWasCalled == true)
+        #expect(mockRepo.foods.isEmpty == true)
+    }
 }

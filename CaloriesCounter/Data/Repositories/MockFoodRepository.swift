@@ -9,12 +9,14 @@ import Foundation
 
 class MockFoodRepository: FoodEntryRepositoryProtocol {
     var foods: [FoodEntry] = []
+    var deleteWasCalled = false
 
     func save(_ food: FoodEntry) throws {
         foods.append(food)
     }
 
     func delete(id: UUID) throws {
+        deleteWasCalled = true
         foods.removeAll { $0.id == id }
     }
 

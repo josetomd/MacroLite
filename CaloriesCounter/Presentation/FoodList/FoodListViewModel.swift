@@ -64,6 +64,15 @@ class FoodListViewModel {
         loadData()
     }
 
+    func deleteEntry(id: UUID) {
+        do {
+            try foodRepository.delete(id: id)
+        } catch {
+            handleError(error)
+        }
+        loadData()
+    }
+
     private func handleError(_ error: Error) {
         self.errorMessage = error.localizedDescription
         self.showErrorMessage = true
