@@ -17,7 +17,7 @@ class FoodProductFormViewModel {
     var proteins: String = ""
     var carbs: String = ""
     var fats: String = ""
-    var grams: String = "100"
+    var grams: String = ""
     
     private let repository: FoodProductRepositoryProtocol
     private var existingProduct: FoodProduct?
