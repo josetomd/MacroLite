@@ -13,14 +13,18 @@ enum LibraryMode {
     case manage
 }
 
+struct FormDestination: Identifiable {
+    let id = UUID()
+    let product: FoodProduct?
+}
+
 struct FoodLibraryView: View {
     @State var viewModel: FoodLibraryViewModel
     var mode: LibraryMode
     var onConfirmEntry: ((FoodEntry) -> Void)?
     @Environment(\.dismiss) var dismiss
     @State private var selectedProduct: FoodProduct?
-    @State private var productToEdit: FoodProduct?
-    @State private var isShowingForm = false
+    @State private var formDestination: FormDestination?
 
     var body: some View {
         NavigationStack {
@@ -36,8 +40,7 @@ struct FoodLibraryView: View {
                     } else {
                         // TODO: - Navigate to Edit product
                         Button {
-                            productToEdit = product
-                            isShowingForm = true
+                            formDestination = FormDestination(product: product)
                         } label: {
                             FoodProductRow(product: product)
                         }
@@ -58,7 +61,7 @@ struct FoodLibraryView: View {
                 } else {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            isShowingForm = true
+                            formDestination = FormDestination(product: nil)
                         } label: {
                             Image(systemName: "plus")
                         }
@@ -76,9 +79,11 @@ struct FoodLibraryView: View {
                     dismiss()
                 }
             }
-            .sheet(isPresented: $isShowingForm) {
-                let formVM = FoodProductFormViewModel(repository: viewModel.getFoodProductRepository(), product: productToEdit)
-
+            .sheet(item: $formDestination) { destination in
+                let formVM = FoodProductFormViewModel(
+                    repository: viewModel.getFoodProductRepository(),
+                    product: destination.product
+                )
                 FoodProductFormView(viewModel: formVM) {
                     viewModel.loadInitialProducts()
                 }
