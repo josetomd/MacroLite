@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import SwiftData
 
-struct FoodEntry: Identifiable, Hashable {
-    var id: UUID = UUID()
+@Model
+class FoodEntry {
+    @Attribute(.unique) var id: UUID = UUID()
     var name: String
     var calories: Int
     var proteins: Double

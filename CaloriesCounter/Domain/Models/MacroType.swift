@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum MacroType: String, CaseIterable, Identifiable {
+enum MacroType: String, CaseIterable, Identifiable, Codable {
     case calories = "Calorías"
     case protein = "Proteínas"
     case carbs = "Carbohidratos"
