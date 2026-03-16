@@ -26,20 +26,20 @@ struct FoodRowView: View {
                     .fontWeight(.semibold)
 
                 HStack(spacing: 10) {
-                    macroTag(label: "C", value: food.carbohydrates, color: .blue)
-                    macroTag(label: "P", value: food.proteins, color: .purple)
-                    macroTag(label: "G", value: food.fats, color: .orange)
+                    macroTag(label: "C", value: food.totalCarbs, color: .blue)
+                    macroTag(label: "P", value: food.totalProteins, color: .purple)
+                    macroTag(label: "G", value: food.totalFats, color: .orange)
                 }
             }
 
             Spacer()
 
             VStack(alignment: .trailing, spacing: 2) {
-                Text("\(food.calories) kcal")
+                Text("\(food.totalCalories) kcal")
                     .font(.subheadline)
                     .fontWeight(.bold)
 
-                Text("\(Int(food.grams)) g")
+                Text("\(Int(food.totalGrams)) g")
                     .font(.caption2)
                     .foregroundColor(.secondary)
             }

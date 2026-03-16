@@ -16,7 +16,7 @@ struct MealSectionView: View {
 
     var onDelete: (UUID) -> Void
     var totalCalories: Int {
-        entries.reduce(0) { $0 + $1.calories }
+        entries.reduce(0) { $0 + ($1.calories * Int($1.amount)) }
     }
 
     var body: some View {
