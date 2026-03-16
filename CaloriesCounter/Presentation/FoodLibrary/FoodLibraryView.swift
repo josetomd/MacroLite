@@ -83,8 +83,10 @@ struct FoodLibraryView: View {
                     repository: viewModel.getFoodProductRepository(),
                     product: destination.product
                 )
-                FoodProductFormView(viewModel: formVM) {
-                    viewModel.loadInitialProducts()
+                NavigationStack {
+                    FoodProductFormView(viewModel: formVM) {
+                        viewModel.loadInitialProducts()
+                    }
                 }
             }
             .onAppear {
