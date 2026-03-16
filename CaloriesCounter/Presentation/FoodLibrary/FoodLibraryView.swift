@@ -38,7 +38,6 @@ struct FoodLibraryView: View {
                         }
                         .buttonStyle(.plain)
                     } else {
-                        // TODO: - Navigate to Edit product
                         Button {
                             formDestination = FormDestination(product: product)
                         } label: {
@@ -68,7 +67,7 @@ struct FoodLibraryView: View {
                     }
                 }
             }
-            .onChange(of: viewModel.searchText) { newText in
+            .onChange(of: viewModel.searchText) { _, _ in
                 viewModel.performSearch()
             }
             .navigationDestination(item: $selectedProduct) { product in
@@ -92,7 +91,8 @@ struct FoodLibraryView: View {
     }
 
     private func deleteProduct(at offsets: IndexSet) {
-        // TODO: - Delete
+        viewModel.deleteProduct(offsets: offsets)
+        viewModel.loadInitialProducts()
     }
 }
 

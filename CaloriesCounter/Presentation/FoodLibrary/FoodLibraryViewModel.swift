@@ -14,14 +14,14 @@ class FoodLibraryViewModel {
     var errorMessage: String?
     var showMessage: Bool = false
     private(set) var filteredProducts: [FoodProduct] = []
-    
+
     private let repository: FoodProductRepositoryProtocol
-    
+
     init(repository: FoodProductRepositoryProtocol) {
         self.repository = repository
         loadInitialProducts()
     }
-    
+
     func loadInitialProducts() {
         do {
             self.filteredProducts = try repository.fetchProducts()
@@ -29,7 +29,7 @@ class FoodLibraryViewModel {
             handleError(error)
         }
     }
-    
+
     func performSearch() {
         do {
             self.filteredProducts = try repository.searchProducts(query: searchText)
@@ -40,6 +40,17 @@ class FoodLibraryViewModel {
 
     func getFoodProductRepository() -> FoodProductRepositoryProtocol {
         repository
+    }
+
+    func deleteProduct(offsets: IndexSet) {
+        offsets.forEach { index in
+            let product = self.filteredProducts[index]
+            do {
+                try repository.deleteProduct(id: product.id)
+            } catch {
+                handleError(error)
+            }
+        }
     }
 
     private func handleError(_ error: Error) -> Void {
