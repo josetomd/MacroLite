@@ -1,5 +1,5 @@
 //
-//  MockFoodEntryRepository.swift
+//  MockFoodProductyRepository.swift
 //  CaloriesCounter
 //
 //  Created by Josset Garcia on 13-03-26.
@@ -16,6 +16,7 @@ class MockFoodProductRepository: FoodProductRepositoryProtocol {
     ]
 
     var updateWasCalled = false
+    var deleteWasCalled = false
 
     func fetchProducts() throws -> [FoodProduct] {
         return products
@@ -30,6 +31,7 @@ class MockFoodProductRepository: FoodProductRepositoryProtocol {
         products.append(product)
     }
     func deleteProduct(id: UUID) throws {
+        deleteWasCalled = true
         products.removeAll { $0.id == id }
     }
 

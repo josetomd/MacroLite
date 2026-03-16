@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FoodProductFormView: View {
     @State var viewModel: FoodProductFormViewModel
+    @State private var isShowingDeleteConfirmation = false
     @Environment(\.dismiss) var dismiss
 
     var onSave: () -> Void
@@ -85,6 +86,28 @@ struct FoodProductFormView: View {
             }
             .disabled(viewModel.name.isEmpty)
             .padding()
+
+            if viewModel.isEditing {
+                Button(role: .destructive) {
+                    isShowingDeleteConfirmation = true
+                } label: {
+                    Label("Eliminar Alimento", systemImage: "trash")
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .padding(.horizontal)
+            }
+        }
+        .alert("¿Eliminar Alimento?", isPresented: $isShowingDeleteConfirmation) {
+            Button("Eliminar", role: .destructive) {
+                viewModel.delete()
+                onSave()
+                dismiss()
+            }
+            Button("Cancelar", role: .cancel) { }
+        } message: {
+            Text("Esta acción no se puede deshacer. El alimento desaparecerá de tu catálogo.")
         }
     }
 
@@ -103,6 +126,6 @@ struct FoodProductFormView: View {
 
 #Preview {
     FoodProductFormView(viewModel: FoodProductFormViewModel(repository: MockFoodProductRepository())) {
-        
+
     }
 }

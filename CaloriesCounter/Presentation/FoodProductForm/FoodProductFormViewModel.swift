@@ -22,6 +22,8 @@ class FoodProductFormViewModel {
     private let repository: FoodProductRepositoryProtocol
     private var existingProduct: FoodProduct?
 
+    var isEditing: Bool { existingProduct != nil}
+
     init(repository: FoodProductRepositoryProtocol, product: FoodProduct? = nil) {
         self.repository = repository
         if let p = product {
@@ -35,7 +37,7 @@ class FoodProductFormViewModel {
         }
     }
 
-    func save()  {
+    func save() {
         do {
             if existingProduct != nil {
                 existingProduct?.name = name
@@ -65,4 +67,14 @@ class FoodProductFormViewModel {
         }
     }
 
+    func delete() {
+        if let id = existingProduct?.id {
+            do {
+                try repository.deleteProduct(id: id)
+            } catch {
+                errorMessage = error.localizedDescription
+                showError = true
+            }
+        }
+    }
 }
