@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-enum MacroType: String, CaseIterable {
+enum MacroType: String, CaseIterable, Identifiable {
     case calories = "Calorías"
     case protein = "Proteínas"
     case carbs = "Carbohidratos"
     case fats = "Grasas"
+
+    var id: String {
+        self.rawValue
+    }
     
     var color: Color {
         switch self {
