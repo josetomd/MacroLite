@@ -7,13 +7,11 @@
 
 
 import SwiftUI
-
-import SwiftUI
-
 struct FoodDetailView: View {
     @State var viewModel: FoodDetailViewModel
     @Environment(\.dismiss) var dismiss
     @State private var isShowingDeleteConfirmation = false
+    @FocusState private var isAmountFocused: Bool
 
     var onConfirm: (FoodEntry) -> Void
     var onDelete: ((UUID) -> Void)?
@@ -37,7 +35,7 @@ struct FoodDetailView: View {
                         .font(.title.bold())
                         .multilineTextAlignment(.center)
 
-                    Text("\(Int(viewModel.product.grams))g por ración")
+                    Text("\(Int(viewModel.product.grams))g por porción")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -50,7 +48,7 @@ struct FoodDetailView: View {
             ScrollView {
                 VStack(spacing: 24) {
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Raciones")
+                        Text("Porciones")
                             .font(.headline)
                             .padding(.leading, 5)
 
@@ -63,8 +61,15 @@ struct FoodDetailView: View {
 
                             Spacer()
 
-                            Text("\(viewModel.selectedAmount)")
+                            TextField("", value: $viewModel.selectedAmount, formatter: NumberFormatter())
                                 .font(.system(size: 45, weight: .bold, design: .rounded))
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.center)
+                                .focused($isAmountFocused)
+                                .frame(width: 100)
+                                .onSubmit {
+                                    if viewModel.selectedAmount < 1 { viewModel.selectedAmount = 1 }
+                                }
 
                             Spacer()
 
@@ -139,12 +144,16 @@ struct FoodDetailView: View {
                         isShowingDeleteConfirmation = true
                     }
                 } label: {
-                    Text("Eliminar ración")
+                    Text("Eliminar entrada")
                         .fontWeight(.medium)
                         .foregroundColor(.red)
                         .padding()
                 }
             }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            isAmountFocused = false
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -155,6 +164,14 @@ struct FoodDetailView: View {
                         Text("Atrás")
                     }
                 }
+            }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Listo") {
+                    isAmountFocused = false
+                    if viewModel.selectedAmount < 1 { viewModel.selectedAmount = 1 }
+                }
+                .fontWeight(.bold)
             }
         }
         .alert("¿Eliminar Alimento?", isPresented: $isShowingDeleteConfirmation) {
