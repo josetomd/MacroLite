@@ -38,6 +38,10 @@ class FoodLibraryViewModel {
         }
     }
 
+    func getFoodProductRepository() -> FoodProductRepositoryProtocol {
+        repository
+    }
+
     private func handleError(_ error: Error) -> Void {
         errorMessage = error.localizedDescription
         showMessage = true

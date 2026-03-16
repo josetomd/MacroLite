@@ -16,10 +16,11 @@ enum LibraryMode {
 struct FoodLibraryView: View {
     @State var viewModel: FoodLibraryViewModel
     var mode: LibraryMode
-    var onConfirmEntry: (FoodEntry) -> Void
+    var onConfirmEntry: ((FoodEntry) -> Void)?
     @Environment(\.dismiss) var dismiss
     @State private var selectedProduct: FoodProduct?
-    
+    @State private var isShowingForm = false
+
     var body: some View {
         NavigationStack {
             List {
@@ -32,6 +33,7 @@ struct FoodLibraryView: View {
                         }
                         .buttonStyle(.plain)
                     } else {
+                        // TODO: - Navigate to Edit product
                         FoodProductRow(product: product)
                     }
                 }
@@ -46,6 +48,14 @@ struct FoodLibraryView: View {
                             dismiss()
                         }
                     }
+                } else {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isShowingForm = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
                 }
             }
             .onChange(of: viewModel.searchText) { newText in
@@ -53,15 +63,22 @@ struct FoodLibraryView: View {
             }
             .navigationDestination(item: $selectedProduct) { product in
                 let detailVM = FoodDetailViewModel(product: product)
-                
+
                 FoodDetailView(viewModel: detailVM) { entry in
-                    onConfirmEntry(entry)
+                    onConfirmEntry?(entry)
                     dismiss()
+                }
+            }
+            .sheet(isPresented: $isShowingForm) {
+                let formVM = FoodProductFormViewModel(repository: viewModel.getFoodProductRepository())
+
+                FoodProductFormView(viewModel: formVM) {
+                    viewModel.loadInitialProducts()
                 }
             }
         }
     }
-    
+
     private func deleteProduct(at offsets: IndexSet) {
         // TODO: - Delete
     }
@@ -69,8 +86,10 @@ struct FoodLibraryView: View {
 
 #Preview {
     let repo = MockFoodProductRepository()
+    let viewModel = FoodLibraryViewModel(repository: repo)
     NavigationStack {
-        FoodLibraryView(viewModel: .init(repository: repo), mode: .select) { food in
+        FoodLibraryView(viewModel: viewModel, mode: .manage) { food in
+            viewModel.loadInitialProducts()
         }
     }
 }

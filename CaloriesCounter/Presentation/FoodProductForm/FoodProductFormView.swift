@@ -11,6 +11,8 @@ struct FoodProductFormView: View {
     @State var viewModel: FoodProductFormViewModel
     @Environment(\.dismiss) var dismiss
 
+    var onSave: () -> Void
+
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -69,7 +71,8 @@ struct FoodProductFormView: View {
             }
 
             Button {
-                // TODO: - Save food
+                viewModel.save()
+                onSave()
                 dismiss()
             } label: {
                 Text("Guardar en Catálogo")
@@ -99,5 +102,7 @@ struct FoodProductFormView: View {
 }
 
 #Preview {
-    FoodProductFormView(viewModel: FoodProductFormViewModel(repository: MockFoodProductRepository()))
+    FoodProductFormView(viewModel: FoodProductFormViewModel(repository: MockFoodProductRepository())) {
+        
+    }
 }
