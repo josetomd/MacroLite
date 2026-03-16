@@ -29,7 +29,9 @@ struct ContentView: View {
                                 title: mealType.rawValue,
                                 entries: viewModel.groupedFoods[mealType] ?? [],
                                 selectedEntry: $entryToEdit
-                            )
+                            ) { id in
+                                viewModel.deleteEntry(id: id)
+                            }
                         }
                     }
                 }
