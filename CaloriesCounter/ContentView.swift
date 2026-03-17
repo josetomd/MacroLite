@@ -103,6 +103,8 @@ struct ContentView: View {
                     )
 
                     FoodDetailView(viewModel: detailVM) { updatedEntry in
+                        entryToEdit?.amount = updatedEntry.amount
+                        entryToEdit?.mealType = updatedEntry.mealType
                         viewModel.updateEntry(updatedEntry)
                         entryToEdit = nil
                     } onDelete: { id in
