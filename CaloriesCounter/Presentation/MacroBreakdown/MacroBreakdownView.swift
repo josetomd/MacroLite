@@ -186,7 +186,7 @@ struct MacroBreakdownRow: View {
 
 
 #Preview {
-    MacroBreakdownView(viewModel: .init(macroType: .calories, entries: FoodEntry.mockList)) {
+    MacroBreakdownView(viewModel: .init(macroType: .calories, entries: FoodEntry.mockList, target: 2000)) {
 
     }
 }

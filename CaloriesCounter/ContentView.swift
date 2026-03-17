@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var isShowingLibrary = false
     @State private var entryToEdit: FoodEntry?
     @State private var selectedMacro: MacroType?
+    @State private var settings = UserSettings()
+    @State private var showingSettings = false
 
     @State private var libraryViewModel: FoodLibraryViewModel
     init(viewModel: FoodListViewModel, libraryViewModel: FoodLibraryViewModel) {
@@ -59,6 +61,14 @@ struct ContentView: View {
                     ToolbarItem(placement: .principal) {
                         DateSelectorView(selectedDate: $viewModel.selectedDate)
                     }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            showingSettings = true
+                        } label: {
+                            Image(systemName: "gearshape.fill")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
                 .onChange(of: viewModel.selectedDate) { _, _ in
                     viewModel.loadData()
@@ -89,13 +99,22 @@ struct ContentView: View {
                         entryToEdit = nil
                     }
                 }
+                .sheet(isPresented: $showingSettings) {
+                    UserSettingsView(settings: settings)
+                }
             }
 
             if let type = selectedMacro {
+                let targetGoal = switch type {
+                case .calories: settings.targetCalories
+                case .protein: settings.targetProtein
+                case .carbs: settings.targetCarbs
+                case .fats: settings.targetFats
+                }
                 MacroBreakdownView(
-                    viewModel: MacroBreakdownViewModel(macroType: type, entries: viewModel.allEntries)
+                    viewModel: MacroBreakdownViewModel(macroType: type, entries: viewModel.allEntries, target: targetGoal)
                 ) {
-                        selectedMacro = nil
+                    selectedMacro = nil
                 }
             }
         }

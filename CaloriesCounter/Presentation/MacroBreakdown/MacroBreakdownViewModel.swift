@@ -16,14 +16,7 @@ class MacroBreakdownViewModel {
     var maxTotalValue: Double {
         totalValue
     }
-    var dailyTarget: Double {
-        switch macroType {
-        case .calories: return 2000
-        case .protein: return 150
-        case .carbs: return 250
-        case .fats: return 70
-        }
-    }
+    let dailyTarget: Double
 
     var completionPercentage: Double {
         guard dailyTarget > 0 else { return 0 }
@@ -40,8 +33,9 @@ class MacroBreakdownViewModel {
         filteredEntries.reduce(0) { $0 + $1.value(for: macroType) }
     }
 
-    init(macroType: MacroType, entries: [FoodEntry]) {
+    init(macroType: MacroType, entries: [FoodEntry], target: Double) {
         self.macroType = macroType
         self.allEntries = entries
+        self.dailyTarget = target
     }
 }
