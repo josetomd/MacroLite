@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var selectedMacro: MacroType?
     @State private var settings = UserSettings()
     @State private var showingSettings = false
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
 
     @State private var libraryViewModel: FoodLibraryViewModel
     init(viewModel: FoodListViewModel, libraryViewModel: FoodLibraryViewModel) {
@@ -102,6 +103,15 @@ struct ContentView: View {
                 .sheet(isPresented: $showingSettings) {
                     UserSettingsView(settings: settings)
                 }
+            }
+            .fullScreenCover(isPresented: .init(
+                get: { !hasCompletedOnboarding },
+                set: { hasCompletedOnboarding = !$0 }
+            )) {
+                OnboardingView(settings: settings, shouldShowOnboarding: .init(
+                    get: { !hasCompletedOnboarding },
+                    set: { hasCompletedOnboarding = !$0 }
+                ))
             }
 
             if let type = selectedMacro {
