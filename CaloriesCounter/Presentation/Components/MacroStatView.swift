@@ -19,7 +19,7 @@ struct MacroStatView: View {
         guard goal > 0 else { return 0 }
         return value / goal
     }
-    
+
     var body: some View {
         VStack(spacing: 8) {
             ZStack {
@@ -29,20 +29,20 @@ struct MacroStatView: View {
                 Circle()
                     .trim(from: 0, to: CGFloat(min(progress, 1.0)))
                     .stroke(color, style: StrokeStyle(lineWidth: 6, lineCap: .round))
-                    .rotationEffect(.degrees(-90)) // Empezar arriba
+                    .rotationEffect(.degrees(-90))
                     .animation(.spring, value: value)
-                
+
                 VStack(spacing: 0) {
-                                    Text("\(Int(value))")
-                                        .font(.system(.subheadline, design: .rounded))
-                                        .fontWeight(.bold)
-                                    Text(unit)
-                                        .font(.system(size: 8))
-                                        .foregroundColor(.secondary)
-                                }
+                    Text("\(value.formatted())")
+                        .font(.system(.subheadline, design: .rounded))
+                        .fontWeight(.bold)
+                    Text(unit)
+                        .font(.system(size: 8))
+                        .foregroundColor(.secondary)
+                }
             }
             .frame(width: 60, height: 60)
-            
+
             Text(title)
                 .font(.caption2)
                 .foregroundColor(.secondary)

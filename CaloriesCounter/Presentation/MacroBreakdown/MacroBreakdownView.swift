@@ -107,7 +107,7 @@ struct MacroBreakdownView: View {
                         .tracking(2)
                         .foregroundStyle(.secondary)
 
-                    Text("\(Int(viewModel.totalValue))")
+                    Text("\(viewModel.totalValue.formatted())")
                         .font(.system(size: 40, weight: .black, design: .rounded))
 
                     Text(viewModel.macroType.unit)

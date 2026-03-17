@@ -111,9 +111,9 @@ struct FoodDetailView: View {
 
                         HStack(spacing: 20) {
                             nutritionBadge(label: "Calorías", value: "\(viewModel.product.calories * viewModel.selectedAmount)", color: .primary)
-                            nutritionBadge(label: "Proteínas", value: "\(Int(viewModel.product.proteins * Double(viewModel.selectedAmount)))g", color: .purple)
-                            nutritionBadge(label: "Carbs", value: "\(Int(viewModel.product.carbohydrates * Double(viewModel.selectedAmount)))g", color: .blue)
-                            nutritionBadge(label: "Grasas", value: "\(Int(viewModel.product.fats * Double(viewModel.selectedAmount)))g", color: .orange)
+                            nutritionBadge(label: "Proteínas", value: "\((viewModel.product.proteins * Double(viewModel.selectedAmount)).formatted())g", color: .purple)
+                            nutritionBadge(label: "Carbs", value: "\((viewModel.product.carbohydrates * Double(viewModel.selectedAmount)).formatted())g", color: .blue)
+                            nutritionBadge(label: "Grasas", value: "\((viewModel.product.fats * Double(viewModel.selectedAmount)).formatted())g", color: .orange)
                         }
                     }
                     .padding()

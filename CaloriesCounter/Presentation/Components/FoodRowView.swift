@@ -39,7 +39,7 @@ struct FoodRowView: View {
                     .font(.subheadline)
                     .fontWeight(.bold)
 
-                Text("\(Int(food.totalGrams)) g")
+                Text("\(food.totalGrams.formatted()) g")
                     .font(.caption2)
                     .foregroundColor(.secondary)
             }
@@ -53,7 +53,7 @@ struct FoodRowView: View {
             Text(label)
                 .font(.system(size: 9, weight: .black))
                 .foregroundColor(color)
-            Text("\(Int(value))g")
+            Text("\(value.formatted())g")
                 .font(.system(size: 11))
                 .foregroundColor(.primary.opacity(0.8))
         }
