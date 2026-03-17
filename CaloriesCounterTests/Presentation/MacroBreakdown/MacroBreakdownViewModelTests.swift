@@ -16,7 +16,7 @@ struct MacroBreakdownViewModelTests {
             .init(name: "Banana", calories: 70, proteins: 0, carbohydrates: 27, fats: 0, grams: 1, amount: 1, mealType: .breakfast, date: Date()),
             .init(name: "Egg", calories: 108, proteins: 6, carbohydrates: 0, fats: 5, grams: 1, amount: 1, mealType: .breakfast, date: Date()),
         ]
-        let sut = MacroBreakdownViewModel(macroType: .calories, entries: entries)
+        let sut = MacroBreakdownViewModel(macroType: .calories, entries: entries, target: 2000)
 
         let expectedEgg = sut.filteredEntries.first!
 
@@ -30,7 +30,7 @@ struct MacroBreakdownViewModelTests {
             .init(name: "Egg", calories: 100, proteins: 6, carbohydrates: 0, fats: 5, grams: 1, amount: 3, mealType: .breakfast, date: Date()),
         ]
 
-        let sut = MacroBreakdownViewModel(macroType: .calories, entries: entries)
+        let sut = MacroBreakdownViewModel(macroType: .calories, entries: entries, target: 2000)
 
         #expect(sut.totalValue == 440)
     }
