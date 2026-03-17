@@ -90,4 +90,19 @@ struct FoodProductFormViewModelTests {
 
         #expect(repositoryMock.deleteWasCalled == false)
     }
+
+    @Test func givenStringsWithCommaAndDot_save_saveProductCorrectly() {
+        let repositoryMock = MockFoodProductRepository()
+        repositoryMock.products = []
+        let sut = FoodProductFormViewModel(repository: repositoryMock)
+
+        sut.name = "Test"
+        sut.calories = "100,5"
+        sut.proteins = "10.5"
+
+        sut.save()
+
+        #expect(repositoryMock.products.first?.calories == 100)
+        #expect(repositoryMock.products.first?.proteins == 10.5)
+    }
 }

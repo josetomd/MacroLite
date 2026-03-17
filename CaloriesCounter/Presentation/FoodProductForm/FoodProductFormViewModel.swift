@@ -39,13 +39,19 @@ class FoodProductFormViewModel {
 
     func save() {
         do {
+            let parsedCalories = Int(parseDouble(calories))
+            let parsedProteins = parseDouble(proteins)
+            let parsedCarbs = parseDouble(carbs)
+            let parsedFats = parseDouble(fats)
+            let parsedGrams = parseDouble(grams)
+
             if existingProduct != nil {
                 existingProduct?.name = name
-                existingProduct?.calories = Int(calories) ?? 0
-                existingProduct?.proteins = Double(proteins) ?? 0
-                existingProduct?.carbohydrates = Double(carbs) ?? 0
-                existingProduct?.fats = Double(fats) ?? 0
-                existingProduct?.grams = Double(grams) ?? 100
+                existingProduct?.calories = parsedCalories
+                existingProduct?.proteins = parsedProteins
+                existingProduct?.carbohydrates = parsedCarbs
+                existingProduct?.fats = parsedFats
+                existingProduct?.grams = parsedGrams > 0 ? parsedGrams : 100
 
                 try repository.updateProduct(existingProduct!)
 
@@ -53,11 +59,11 @@ class FoodProductFormViewModel {
                 let newProduct = FoodProduct(
                     id: existingProduct?.id ?? UUID(),
                     name: name,
-                    calories: Int(calories) ?? 0,
-                    proteins: Double(proteins) ?? 0,
-                    carbohydrates: Double(carbs) ?? 0,
-                    fats: Double(fats) ?? 0,
-                    grams: Double(grams) ?? 100
+                    calories: parsedCalories,
+                    proteins: parsedProteins,
+                    carbohydrates: parsedCarbs,
+                    fats: parsedFats,
+                    grams: parsedGrams > 0 ? parsedGrams : 100
                 )
                 try repository.saveProduct(newProduct)
             }
@@ -76,5 +82,20 @@ class FoodProductFormViewModel {
                 showError = true
             }
         }
+    }
+
+    private func parseDouble(_ value: String) -> Double {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+
+        let cleanedValue = value.replacingOccurrences(of: ",", with: ".")
+
+        if let number = formatter.number(from: value) {
+            return number.doubleValue
+        } else if let fallbackNumber = Double(cleanedValue) {
+            return fallbackNumber
+        }
+
+        return 0.0
     }
 }
