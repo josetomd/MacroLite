@@ -24,6 +24,13 @@ class UserSettings {
         didSet { UserDefaults.standard.set(targetFats, forKey: "targetFats") }
     }
 
+    var isFormValid: Bool {
+        targetCalories >= 500 && targetCalories <= 10000 &&
+        targetProtein >= 10 &&
+        targetCarbs >= 10 &&
+        targetFats >= 5
+    }
+
     init() {
         self.targetCalories = UserDefaults.standard.double(forKey: "targetCalories") == 0 ? 2000 : UserDefaults.standard.double(forKey: "targetCalories")
         self.targetProtein = UserDefaults.standard.double(forKey: "targetProtein") == 0 ? 150 : UserDefaults.standard.double(forKey: "targetProtein")
