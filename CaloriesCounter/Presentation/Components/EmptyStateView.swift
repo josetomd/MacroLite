@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EmptyStateView: View {
+    @State private var isAnimating = false
     let icon: String
     let title: String
     let message: String
@@ -26,6 +27,12 @@ struct EmptyStateView: View {
                     )
                 )
                 .padding(.bottom, 10)
+                .offset(y: isAnimating ? -10 : 10)
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                        isAnimating = true
+                    }
+                }
 
             Text(title)
                 .font(.title2.bold())
