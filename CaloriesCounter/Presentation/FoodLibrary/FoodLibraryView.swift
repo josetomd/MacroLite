@@ -28,26 +28,41 @@ struct FoodLibraryView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(viewModel.filteredProducts) { product in
-                    if mode == .select {
-                        Button {
-                            selectedProduct = product
-                        } label: {
-                            FoodProductRow(product: product)
+            Group {
+                if viewModel.filteredProducts.isEmpty {
+                    EmptyStateView(
+                            icon: "plus.rectangle.on.folder",
+                            title: "Catálogo vacío",
+                            message: "Crea tus propios alimentos o productos personalizados para tenerlos siempre a mano.",
+                            buttonText: "Crear Producto",
+                            action: {
+                                formDestination = FormDestination(product: nil)
+                            }
+                        )
+                } else {
+                    List {
+                        ForEach(viewModel.filteredProducts) { product in
+                            if mode == .select {
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    FoodProductRow(product: product)
+                                }
+                                .buttonStyle(.plain)
+                            } else {
+                                Button {
+                                    formDestination = FormDestination(product: product)
+                                } label: {
+                                    FoodProductRow(product: product)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
-                        .buttonStyle(.plain)
-                    } else {
-                        Button {
-                            formDestination = FormDestination(product: product)
-                        } label: {
-                            FoodProductRow(product: product)
-                        }
-                        .buttonStyle(.plain)
+                        .onDelete(perform: mode == .manage ? deleteProduct : nil)
                     }
                 }
-                .onDelete(perform: mode == .manage ? deleteProduct : nil)
             }
+
             .navigationTitle(mode == .manage ? "Mis Alimentos" : "Seleccionar")
             .searchable(text: $viewModel.searchText)
             .toolbar {

@@ -28,14 +28,24 @@ struct ContentView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         NutritionHeader(summary: viewModel.nutritionSummary, selectedMacro: $selectedMacro)
-                        LazyVStack(spacing: 20) {
-                            ForEach(MealType.allCases, id: \.self) { mealType in
-                                MealSectionView(
-                                    title: mealType.rawValue,
-                                    entries: viewModel.groupedFoods[mealType] ?? [],
-                                    selectedEntry: $entryToEdit
-                                ) { id in
-                                    viewModel.deleteEntry(id: id)
+                        if viewModel.allEntries.isEmpty {
+                            EmptyStateView(
+                                icon: "fork.knife.circle",
+                                title: "¿Qué has comido hoy?",
+                                message: "Tu diario está vacío. Registra tu primera comida para empezar a ver tus macros.",
+                                buttonText: "Añadir Alimento",
+                                action: { isShowingLibrary = true }
+                            )
+                        } else {
+                            LazyVStack(spacing: 20) {
+                                ForEach(MealType.allCases, id: \.self) { mealType in
+                                    MealSectionView(
+                                        title: mealType.rawValue,
+                                        entries: viewModel.groupedFoods[mealType] ?? [],
+                                        selectedEntry: $entryToEdit
+                                    ) { id in
+                                        viewModel.deleteEntry(id: id)
+                                    }
                                 }
                             }
                         }
