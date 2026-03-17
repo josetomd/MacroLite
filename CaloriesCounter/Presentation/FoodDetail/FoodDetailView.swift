@@ -42,6 +42,7 @@ struct FoodDetailView: View {
                 .padding(.top, 40)
                 .padding(.bottom, 30)
             }
+            .frame(height: 250)
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .padding(.horizontal, 10)
 

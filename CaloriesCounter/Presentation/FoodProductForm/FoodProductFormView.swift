@@ -60,6 +60,7 @@ struct FoodProductFormView: View {
                 }
                 .padding(.vertical, 30)
             }
+            .frame(height: 250)
             .clipShape(RoundedRectangle(cornerRadius: 30))
             .padding(.horizontal, 10)
 
