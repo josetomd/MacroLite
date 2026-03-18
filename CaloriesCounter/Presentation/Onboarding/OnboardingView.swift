@@ -26,8 +26,8 @@ struct OnboardingView: View {
 
             TabView(selection: $currentPage) {
                 onboardingStep(
-                    title: "¡Bienvenido!",
-                    subtitle: "Tu camino hacia una mejor nutrición empieza aquí.",
+                    title: AppStrings.Onboarding.welcomeTitle,
+                    subtitle: AppStrings.Onboarding.welcomeSubtitle ,
                     icon: "sparkles",
                     color: .orange
                 ).tag(0)
@@ -35,8 +35,8 @@ struct OnboardingView: View {
                 goalsConfigStep.tag(1)
 
                 onboardingStep(
-                    title: "¡Todo listo!",
-                    subtitle: "Tus metas han sido guardadas. Puedes ajustarlas siempre que quieras desde el menú de ajustes.",
+                    title: AppStrings.Onboarding.readyTitle,
+                    subtitle: AppStrings.Onboarding.readySubtitle,
                     icon: "checkmark.circle.fill",
                     color: .green
                 ).tag(2)
@@ -56,18 +56,18 @@ struct OnboardingView: View {
 
     private var goalsConfigStep: some View {
         VStack(spacing: 20) {
-            Text("Tus Metas Diarias")
+            Text(AppStrings.Onboarding.goalsTitle)
                 .font(.title.bold())
 
-            Text("Estos valores serán usados para medir el progreso.")
+            Text(AppStrings.Onboarding.goalsSubtitle)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
             VStack(spacing: 12) {
-                macroInput(label: "Calorías", value: $settings.targetCalories, unit: "kcal", color: .red, range: 500...10000)
-                macroInput(label: "Proteínas", value: $settings.targetProtein, unit: "g", color: .purple, range: 10...500)
-                macroInput(label: "Carbos", value: $settings.targetCarbs, unit: "g", color: .blue, range: 10...1000)
-                macroInput(label: "Grasas", value: $settings.targetFats, unit: "g", color: .orange, range: 5...300)
+                macroInput(label: MacroType.calories.label, value: $settings.targetCalories, unit: "kcal", color: .red, range: 500...10000)
+                macroInput(label: MacroType.protein.label, value: $settings.targetProtein, unit: "g", color: .purple, range: 10...500)
+                macroInput(label: MacroType.carbs.label, value: $settings.targetCarbs, unit: "g", color: .blue, range: 10...1000)
+                macroInput(label: MacroType.fats.label, value: $settings.targetFats, unit: "g", color: .orange, range: 5...300)
             }
             .padding()
             .background(Color(.secondarySystemBackground))
@@ -81,13 +81,12 @@ struct OnboardingView: View {
                     settings.targetFats = 70
                 }
             } label: {
-                Label("Usar valores estándar", systemImage: "arrow.counterclockwise")
-                    .font(.caption.bold())
+                Label(String(localized: AppStrings.Onboarding.standardValuesButton), systemImage: "arrow.counterclockwise")
             }
             .padding(.top, 5)
 
             if !isFormValid {
-                Text("Ingresa valores realistas")
+                Text(AppStrings.Onboarding.validationError)
                     .font(.caption)
                     .foregroundStyle(.red)
                     .transition(.opacity)
@@ -97,7 +96,7 @@ struct OnboardingView: View {
         .padding(.bottom, 80)
     }
 
-    private func macroInput(label: String, value: Binding<Double>, unit: String, color: Color, range: ClosedRange<Double>) -> some View {
+    private func macroInput(label: LocalizedStringResource, value: Binding<Double>, unit: String, color: Color, range: ClosedRange<Double>) -> some View {
         let isValid = range.contains(value.wrappedValue)
 
         return HStack {
@@ -125,7 +124,9 @@ struct OnboardingView: View {
                 shouldShowOnboarding = false
             }
         } label: {
-            Text(currentPage == 2 ? "Comenzar" : "Siguiente")
+            Text(currentPage == 2 ?
+                 AppStrings.Onboarding.startButton :
+                    AppStrings.Onboarding.nextButton)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -136,22 +137,34 @@ struct OnboardingView: View {
         .disabled(currentPage == 1 && !isFormValid)
     }
 
-    private func onboardingStep(title: String, subtitle: String, icon: String, color: Color) -> some View {
-        VStack(spacing: 20) {
-            Image(systemName: icon)
-                .font(.system(size: 80))
-                .foregroundStyle(color)
-            Text(title).font(.largeTitle.bold())
-            Text(subtitle)
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
+        private func onboardingStep(
+                    title: LocalizedStringResource,
+                    subtitle: LocalizedStringResource,
+                    icon: String,
+                    color: Color
+        ) -> some View {
+            VStack(spacing: 20) {
+                Image(systemName: icon)
+                    .font(.system(size: 80))
+                    .foregroundStyle(color)
+                Text(title)
+                    .font(.largeTitle.bold())
+                Text(subtitle)
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+            }
+            .padding(.bottom, 100)
         }
-        .padding(.bottom, 100)
-    }
 }
 
-#Preview {
+#Preview("English") {
     OnboardingView(settings: .init(), shouldShowOnboarding: .constant(true))
+        .environment(\.locale, .init(identifier: "en"))
+}
+
+#Preview("Spanish") {
+    OnboardingView(settings: .init(), shouldShowOnboarding: .constant(true))
+        .environment(\.locale, .init(identifier: "es"))
 }

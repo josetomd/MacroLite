@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 enum MacroType: String, CaseIterable, Identifiable, Codable {
     case calories = "Calorías"
     case protein = "Proteínas"
@@ -16,7 +17,15 @@ enum MacroType: String, CaseIterable, Identifiable, Codable {
     var id: String {
         self.rawValue
     }
-    
+
+    var label: LocalizedStringResource {
+        switch self {
+        case .calories: return AppStrings.Macros.calories
+        case .protein: return AppStrings.Macros.protein
+        case .carbs: return AppStrings.Macros.carbs
+        case .fats: return AppStrings.Macros.fats
+        }
+    }
     var color: Color {
         switch self {
         case .calories: return .primary
@@ -25,6 +34,6 @@ enum MacroType: String, CaseIterable, Identifiable, Codable {
         case .fats: return .orange
         }
     }
-    
+
     var unit: String { self == .calories ? "kcal" : "g" }
 }
