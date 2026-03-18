@@ -16,4 +16,17 @@ enum MealType: String, CaseIterable, Identifiable, Codable {
     var id: String {
         self.rawValue
     }
+
+    var label: LocalizedStringResource {
+        switch self {
+        case .breakfast:
+            return AppStrings.MealType.breakfast
+        case .lunch:
+            return AppStrings.MealType.lunch
+        case .dinner:
+            return AppStrings.MealType.dinner
+        case .snack:
+            return AppStrings.MealType.snack
+        }
+    }
 }

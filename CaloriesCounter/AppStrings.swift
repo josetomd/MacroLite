@@ -105,7 +105,13 @@ struct AppStrings {
         static let mainSources = LocalizedStringResource("macro_breakdown.main_sources")
         static let records = LocalizedStringResource("macro_breakdown.records")
     }
-    
+
+    struct MealType {
+        static let breakfast = LocalizedStringResource("meal_type.breakfast")
+        static let lunch = LocalizedStringResource("meal_type.lunch")
+        static let dinner = LocalizedStringResource("meal_type.dinner")
+        static let snack = LocalizedStringResource("meal_type.snack")
+    }
     struct Alert {
         static let cancelButton = LocalizedStringResource("alert.cancel_button")
         static let deleteButton = LocalizedStringResource("alert.delete_button")

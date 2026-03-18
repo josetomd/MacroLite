@@ -10,7 +10,7 @@ import SwiftUI
 struct MealSectionView: View {
     @State private var isShowingDeleteConfirmation = false
     @State private var selectedID: UUID?
-    let title: String
+    let title: LocalizedStringResource
     let entries: [FoodEntry]
     @Binding var selectedEntry: FoodEntry?
 
@@ -84,5 +84,5 @@ struct MealSectionView: View {
 
 #Preview {
     @Previewable @State var selectedEntry: FoodEntry? = FoodEntry.mockList.first!
-    MealSectionView(title: "Breakfast", entries: FoodEntry.mockList, selectedEntry: $selectedEntry) { _ in }
+    MealSectionView(title: AppStrings.MealType.breakfast, entries: FoodEntry.mockList, selectedEntry: $selectedEntry) { _ in }
 }

@@ -40,7 +40,7 @@ struct ContentView: View {
                             LazyVStack(spacing: 20) {
                                 ForEach(MealType.allCases, id: \.self) { mealType in
                                     MealSectionView(
-                                        title: mealType.rawValue,
+                                        title: mealType.label,
                                         entries: viewModel.groupedFoods[mealType] ?? [],
                                         selectedEntry: $entryToEdit
                                     ) { id in
