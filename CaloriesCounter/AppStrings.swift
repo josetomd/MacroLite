@@ -44,6 +44,24 @@ struct AppStrings {
         static let navigationCloseButton = LocalizedStringResource("library.navigation.close_button")
     }
 
+    struct FoodProductForm {
+        static let namePlaceholder = LocalizedStringResource("food_product_form.name_placeholder")
+        static let eachPlaceholder = LocalizedStringResource("food_product_form.each_placeholder")
+        static let nutritionalFactsText = LocalizedStringResource("food_product_form.nutritional_facts_text")
+        static let macroRowCaloriesLabel = LocalizedStringResource("food_product_form.macro_row.calories_label")
+        static let macroRowProteinsLabel = LocalizedStringResource("food_product_form.macro_row.proteins_label")
+        static let macroRowCarbsLabel = LocalizedStringResource("food_product_form.macro_row.carbs_label")
+        static let macroRowFatsLabel = LocalizedStringResource("food_product_form.macro_row.fats_label")
+        static let saveButton = LocalizedStringResource("food_product_form.save_button")
+        static let deleteButton = LocalizedStringResource("food_product_form.delete_button")
+        static let alertTitle = LocalizedStringResource("food_product_form.alert_title")
+        static let alertMessage = LocalizedStringResource("food_product_form.alert_message")
+
+        struct Keyboard{
+            static let done = LocalizedStringResource("food_product_form.keyboard.done")
+            static let next = LocalizedStringResource("food_product_form.keyboard.next")
+        }
+    }
     struct Macros {
         static let calories = LocalizedStringResource("macro.label.calories")
         static let protein = LocalizedStringResource("macro.label.protein")

@@ -19,6 +19,20 @@ class FoodProductFormViewModel {
     var fats: String = ""
     var grams: String = ""
 
+    var foodNamePlaceholder = AppStrings.FoodProductForm.namePlaceholder
+    var eachPlaceholder = AppStrings.FoodProductForm.eachPlaceholder
+    var nutritionalFactsText = AppStrings.FoodProductForm.nutritionalFactsText
+    var macroRowCaloriesLabel = AppStrings.FoodProductForm.macroRowCaloriesLabel
+    var macroRowProteinsLabel = AppStrings.FoodProductForm.macroRowProteinsLabel
+    var macroRowCarbsLabel = AppStrings.FoodProductForm.macroRowCarbsLabel
+    var macroRowFatsLabel = AppStrings.FoodProductForm.macroRowFatsLabel
+    var saveButtonText = AppStrings.FoodProductForm.saveButton
+    var deleteButtonText = AppStrings.FoodProductForm.deleteButton
+    var keyboardKeyDone = AppStrings.FoodProductForm.Keyboard.done
+    var keyboardKeyNext = AppStrings.FoodProductForm.Keyboard.next
+    var alertTitle = AppStrings.FoodProductForm.alertTitle
+    var alertMessage = AppStrings.FoodProductForm.alertMessage
+
     private let repository: FoodProductRepositoryProtocol
     private var existingProduct: FoodProduct?
 
