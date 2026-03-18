@@ -35,9 +35,12 @@ struct FoodDetailView: View {
                         .font(.title.bold())
                         .multilineTextAlignment(.center)
 
-                    Text("\(Int(viewModel.product.grams))g por porción")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    HStack(spacing: 0) {
+                        Text("\(Int(viewModel.product.grams))")
+                        Text(AppStrings.FoodDetails.gramsPerServing)
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
                 }
                 .padding(.top, 40)
                 .padding(.bottom, 30)
@@ -49,7 +52,7 @@ struct FoodDetailView: View {
             ScrollView {
                 VStack(spacing: 24) {
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Porciones")
+                        Text(AppStrings.FoodDetails.servings)
                             .font(.headline)
                             .padding(.leading, 5)
 
@@ -72,10 +75,16 @@ struct FoodDetailView: View {
                                     .onSubmit {
                                         if viewModel.selectedAmount < 1 { viewModel.selectedAmount = 1 }
                                     }
-                                Text("= \(Int(viewModel.totalGrams)) g totales")
-                                    .font(.subheadline.bold())
-                                    .foregroundStyle(.secondary)
-                                    .padding(.top, -5)
+                                HStack(spacing: 0) {
+                                    Text("= ")
+
+                                    Text("\(Int(viewModel.totalGrams)) ")
+
+                                    Text(AppStrings.FoodDetails.totalGrams)
+                                }
+                                .font(.subheadline.bold())
+                                .foregroundStyle(.secondary)
+                                .padding(.top, -5)
                             }
 
                             Spacer()
@@ -93,7 +102,7 @@ struct FoodDetailView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Momento del día")
+                        Text(AppStrings.FoodDetails.timeOfDay)
                             .font(.headline)
                             .padding(.leading, 5)
 
@@ -106,15 +115,15 @@ struct FoodDetailView: View {
                     }
 
                     VStack(spacing: 15) {
-                        Text("Total a registrar")
+                        Text(AppStrings.FoodDetails.totalToBeRegistered)
                             .font(.subheadline.bold())
                             .foregroundStyle(.secondary)
 
                         HStack(spacing: 20) {
-                            nutritionBadge(label: "Calorías", value: "\(viewModel.product.calories * viewModel.selectedAmount)", color: .primary)
-                            nutritionBadge(label: "Proteínas", value: "\((viewModel.product.proteins * Double(viewModel.selectedAmount)).formatted())g", color: .purple)
+                            nutritionBadge(label: MacroType.calories.label, value: "\(viewModel.product.calories * viewModel.selectedAmount)", color: .primary)
+                            nutritionBadge(label: MacroType.protein.label, value: "\((viewModel.product.proteins * Double(viewModel.selectedAmount)).formatted())g", color: .purple)
                             nutritionBadge(label: "Carbs", value: "\((viewModel.product.carbohydrates * Double(viewModel.selectedAmount)).formatted())g", color: .blue)
-                            nutritionBadge(label: "Grasas", value: "\((viewModel.product.fats * Double(viewModel.selectedAmount)).formatted())g", color: .orange)
+                            nutritionBadge(label: MacroType.fats.label, value: "\((viewModel.product.fats * Double(viewModel.selectedAmount)).formatted())g", color: .orange)
                         }
                     }
                     .padding()
@@ -130,7 +139,7 @@ struct FoodDetailView: View {
                 onConfirm(entry)
             } label: {
                 HStack {
-                    Text(viewModel.isEditing ? "Actualizar" : "Confirmar Selección")
+                    Text(viewModel.isEditingText)
                         .fontWeight(.bold)
                     Image(systemName: "checkmark.circle.fill")
                 }
@@ -151,7 +160,7 @@ struct FoodDetailView: View {
                         isShowingDeleteConfirmation = true
                     }
                 } label: {
-                    Text("Eliminar entrada")
+                    Text(AppStrings.FoodDetails.delete)
                         .fontWeight(.medium)
                         .foregroundColor(.red)
                         .padding()
@@ -168,31 +177,35 @@ struct FoodDetailView: View {
                 Button { dismiss() } label: {
                     HStack(spacing: 5) {
                         Image(systemName: "chevron.left")
-                        Text("Atrás")
+                        Text(AppStrings.FoodDetails.navigationBack)
                     }
                 }
             }
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                Button("Listo") {
+                Button {
                     isAmountFocused = false
-                    if viewModel.selectedAmount < 1 { viewModel.selectedAmount = 1 }
+                    if viewModel.selectedAmount < 1 {
+                        viewModel.selectedAmount = 1
+                    }
+                } label: {
+                    Text(AppStrings.FoodDetails.keyboardReady)
                 }
                 .fontWeight(.bold)
             }
         }
-        .alert("¿Eliminar Alimento?", isPresented: $isShowingDeleteConfirmation) {
-            Button("Eliminar", role: .destructive) {
+        .alert(String(localized: AppStrings.FoodDetails.alertTitle), isPresented: $isShowingDeleteConfirmation) {
+            Button(String(localized: AppStrings.Alert.deleteButton), role: .destructive) {
                 onDelete?(viewModel.entryId!)
                 dismiss()
             }
-            Button("Cancelar", role: .cancel) { }
+            Button(String(localized: AppStrings.Alert.cancelButton), role: .cancel) { }
         } message: {
-            Text("Esta acción eliminará la comida del diario")
+            Text(AppStrings.FoodDetails.alertMessage)
         }
     }
 
-    private func nutritionBadge(label: String, value: String, color: Color) -> some View {
+    private func nutritionBadge(label: LocalizedStringResource, value: String, color: Color) -> some View {
         VStack(spacing: 4) {
             Text(value)
                 .font(.headline)

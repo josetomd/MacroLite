@@ -64,10 +64,31 @@ struct AppStrings {
             static let next = LocalizedStringResource("food_product_form.keyboard.next")
         }
     }
+
+    struct FoodDetails {
+        static let gramsPerServing = LocalizedStringResource("food_details.grams_per_serving")
+        static let servings = LocalizedStringResource("food_details.servings")
+        static let totalGrams = LocalizedStringResource("food_details.total_grams")
+        static let timeOfDay = LocalizedStringResource("food_details.time_of_day")
+        static let totalToBeRegistered = LocalizedStringResource("food_details.total_to_be_registered")
+        static let update = LocalizedStringResource("food_details.update")
+        static let confirm = LocalizedStringResource("food_details.confirm")
+        static let delete = LocalizedStringResource("food_details.delete")
+        static let navigationBack = LocalizedStringResource("food_details.navigation.back")
+        static let keyboardReady = LocalizedStringResource("food_details.keyboard.ready")
+        static let alertTitle = LocalizedStringResource("food_details.alert.title")
+        static let alertMessage = LocalizedStringResource("food_details.alert.message")
+    }
+
     struct Macros {
         static let calories = LocalizedStringResource("macro.label.calories")
         static let protein = LocalizedStringResource("macro.label.protein")
         static let carbs = LocalizedStringResource("macro.label.carbs")
         static let fats = LocalizedStringResource("macro.label.fats")
+    }
+
+    struct Alert {
+        static let cancelButton = LocalizedStringResource("alert.cancel_button")
+        static let deleteButton = LocalizedStringResource("alert.delete_Button")
     }
 }

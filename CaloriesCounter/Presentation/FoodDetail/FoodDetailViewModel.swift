@@ -20,6 +20,12 @@ class FoodDetailViewModel {
         entryId != nil
     }
 
+    var isEditingText: LocalizedStringResource {
+        isEditing ?
+        AppStrings.FoodDetails.update :
+        AppStrings.FoodDetails.confirm
+    }
+
     var totalGrams: Double {
         product.grams * Double(selectedAmount)
     }
