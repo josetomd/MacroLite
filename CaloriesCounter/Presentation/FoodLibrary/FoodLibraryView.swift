@@ -32,9 +32,9 @@ struct FoodLibraryView: View {
                 if viewModel.filteredProducts.isEmpty {
                     EmptyStateView(
                         icon: "plus.rectangle.on.folder",
-                        title: AppStrings.Library.EmptyState.title,
-                        message: AppStrings.Library.EmptyState.message,
-                        buttonText: AppStrings.Library.EmptyState.button,
+                        title: viewModel.emptyStateTitle,
+                        message: viewModel.emptyStateMessage,
+                        buttonText: viewModel.emptyStateButtonText,
                         action: {
                             formDestination = FormDestination(product: nil)
                         }
@@ -64,13 +64,13 @@ struct FoodLibraryView: View {
             }
 
             .navigationTitle(mode == .manage ?
-                 String(localized: AppStrings.Library.navigationManageModeTitle) :
-                 String(localized: AppStrings.Library.navigationSelectModeTitle))
+                             String(localized: viewModel.navigationManageModeTitle) :
+                                String(localized: viewModel.navigationSelectModeTitle))
             .searchable(text: $viewModel.searchText)
             .toolbar {
                 if mode == .select {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button(String(localized: AppStrings.Library.navigationCloseButton)) {
+                        Button(String(localized: viewModel.navigationCloseButtonText)) {
                             dismiss()
                         }
                     }

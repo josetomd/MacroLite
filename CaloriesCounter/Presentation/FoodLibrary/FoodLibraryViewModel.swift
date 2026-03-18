@@ -13,6 +13,14 @@ class FoodLibraryViewModel {
     var searchText: String = ""
     var errorMessage: String?
     var showMessage: Bool = false
+
+    var emptyStateTitle = AppStrings.Library.EmptyState.title
+    var emptyStateMessage = AppStrings.Library.EmptyState.message
+    var emptyStateButtonText = AppStrings.Library.EmptyState.button
+    var navigationManageModeTitle = AppStrings.Library.navigationManageModeTitle
+    var navigationSelectModeTitle = AppStrings.Library.navigationSelectModeTitle
+    var navigationCloseButtonText = AppStrings.Library.navigationCloseButton
+    
     private(set) var filteredProducts: [FoodProduct] = []
 
     private let repository: FoodProductRepositoryProtocol
