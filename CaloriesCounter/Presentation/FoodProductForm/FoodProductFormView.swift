@@ -33,7 +33,7 @@ struct FoodProductFormView: View {
                         .font(.system(size: 60))
                         .foregroundStyle(Color.orange)
 
-                    TextField(String(localized: viewModel.foodNamePlaceholder), text: $viewModel.name)
+                    TextField(String(localized: AppStrings.FoodProductForm.namePlaceholder), text: $viewModel.name)
                         .font(.title2.bold())
                         .multilineTextAlignment(.center)
                         .textFieldStyle(.plain)
@@ -47,7 +47,7 @@ struct FoodProductFormView: View {
                         }
 
                     HStack {
-                        Text(viewModel.eachPlaceholder)
+                        Text(AppStrings.FoodProductForm.eachPlaceholder)
                         TextField("100", text: $viewModel.grams)
                             .frame(width: 50)
                             .keyboardType(.numberPad)
@@ -66,30 +66,30 @@ struct FoodProductFormView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
-                    Text(viewModel.nutritionalFactsText)
+                    Text(AppStrings.FoodProductForm.nutritionalFactsText)
                         .font(.headline)
                         .padding(.leading, 5)
 
                     VStack(spacing: 20) {
-                        editableMacroRow(label: viewModel.macroRowCaloriesLabel,
+                        editableMacroRow(label: AppStrings.FoodProductForm.macroRowCaloriesLabel,
                                          value: $viewModel.calories,
                                          icon: "flame.fill",
                                          color: .red,
                                          field: .calories)
                         Divider()
-                        editableMacroRow(label: viewModel.macroRowProteinsLabel,
+                        editableMacroRow(label: AppStrings.FoodProductForm.macroRowProteinsLabel,
                                          value: $viewModel.proteins,
                                          icon: "p.circle.fill",
                                          color: .purple,
                                          field: .proteins)
                         Divider()
-                        editableMacroRow(label: viewModel.macroRowCarbsLabel,
+                        editableMacroRow(label: AppStrings.FoodProductForm.macroRowCarbsLabel,
                                          value: $viewModel.carbs,
                                          icon: "c.circle.fill",
                                          color: .blue,
                                          field: .carbs)
                         Divider()
-                        editableMacroRow(label: viewModel.macroRowFatsLabel,
+                        editableMacroRow(label: AppStrings.FoodProductForm.macroRowFatsLabel,
                                          value: $viewModel.fats,
                                          icon: "f.circle.fill",
                                          color: .orange,
@@ -107,7 +107,7 @@ struct FoodProductFormView: View {
                 onSave()
                 dismiss()
             } label: {
-                Text(viewModel.saveButtonText)
+                Text(AppStrings.FoodProductForm.saveButton)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -122,7 +122,7 @@ struct FoodProductFormView: View {
                 Button(role: .destructive) {
                     isShowingDeleteConfirmation = true
                 } label: {
-                    Label(String(localized: viewModel.deleteButtonText), systemImage: "trash")
+                    Label(String(localized: AppStrings.FoodProductForm.deleteButton), systemImage: "trash")
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -154,22 +154,22 @@ struct FoodProductFormView: View {
                     }
                 } label: {
                     Text(focusedField == .fats ?
-                          viewModel.keyboardKeyDone :
-                          viewModel.keyboardKeyNext)
+                         AppStrings.FoodProductForm.Keyboard.done :
+                            AppStrings.FoodProductForm.Keyboard.next)
                 }
                 .fontWeight(.bold)
             }
         }
-        .alert(String(localized: viewModel.alertTitle), isPresented: $isShowingDeleteConfirmation) {
+        .alert(String(localized: AppStrings.FoodProductForm.alertTitle), isPresented: $isShowingDeleteConfirmation) {
 
-            Button(String(localized: viewModel.alertButtonDelete), role: .destructive) {
+            Button(String(localized: AppStrings.FoodProductForm.alertButtonDelete), role: .destructive) {
                 viewModel.delete()
                 onSave()
                 dismiss()
             }
-            Button(String(localized: viewModel.alertButtonCancel), role: .cancel) {}
+            Button(String(localized: AppStrings.FoodProductForm.alertButtonCancel), role: .cancel) {}
         } message: {
-            Text(viewModel.alertMessage)
+            Text(AppStrings.FoodProductForm.alertMessage)
         }
         .contentShape(Rectangle())
         .onTapGesture {
