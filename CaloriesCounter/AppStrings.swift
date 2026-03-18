@@ -26,7 +26,12 @@ struct AppStrings {
 
         static let validationError = LocalizedStringResource("onboarding.error.validation")
     }
-    
+
+    struct MainTab {
+        static let tabLogTitle = LocalizedStringResource("maintab.log.title")
+        static let tabFoodsTitle = LocalizedStringResource("maintab.foods.title")
+    }
+
     struct Macros {
         static let calories = LocalizedStringResource("macro.label.calories")
         static let protein = LocalizedStringResource("macro.label.protein")

@@ -19,7 +19,7 @@ struct MainTabView: View {
         TabView {
             ContentView(viewModel: FoodListViewModel(foodRepository: entryRepo), libraryViewModel: .init(repository: productRepo))
                 .tabItem {
-                    Label("Diario", systemImage: "calendar")
+                    Label(String(localized: AppStrings.MainTab.tabLogTitle), systemImage: "calendar")
                 }
 
             FoodLibraryView(
@@ -27,12 +27,16 @@ struct MainTabView: View {
                 mode: .manage
             )
             .tabItem {
-                Label("Alimentos", systemImage: "fork.knife")
+                Label(String(localized: AppStrings.MainTab.tabFoodsTitle), systemImage: "fork.knife")
             }
         }
     }
 }
 
-#Preview {
+#Preview("English") {
+    MainTabView(entryRepo: MockFoodEntryRepository(), productRepo: MockFoodProductRepository())
+}
+
+#Preview("Spanish") {
     MainTabView(entryRepo: MockFoodEntryRepository(), productRepo: MockFoodProductRepository())
 }
