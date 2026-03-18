@@ -100,6 +100,12 @@ struct AppStrings {
         static let menuEditTitle = LocalizedStringResource("meal_section.menu_edit_title")
         static let menuDeleteTitle = LocalizedStringResource("meal_section.menu_delete_title")
     }
+
+    struct MacroBreakdown {
+        static let mainSources = LocalizedStringResource("macro_breakdown.main_sources")
+        static let records = LocalizedStringResource("macro_breakdown.records")
+    }
+    
     struct Alert {
         static let cancelButton = LocalizedStringResource("alert.cancel_button")
         static let deleteButton = LocalizedStringResource("alert.delete_button")

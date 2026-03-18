@@ -31,12 +31,15 @@ struct MacroBreakdownView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 16) {
                         HStack {
-                            Text("Fuentes principales")
+                            Text(AppStrings.MacroBreakdown.mainSources)
                                 .font(.headline)
                             Spacer()
-                            Text("\(viewModel.filteredEntries.count) registros")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            HStack(spacing: 0) {
+                                Text("\(viewModel.filteredEntries.count) ")
+                                Text(AppStrings.MacroBreakdown.records)
+                            }
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                         }
                         .padding(.horizontal, 25)
 
@@ -101,7 +104,7 @@ struct MacroBreakdownView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(viewModel.macroType.rawValue.uppercased())
+                    Text(viewModel.macroType.label)
                         .font(.caption)
                         .bold()
                         .tracking(2)
