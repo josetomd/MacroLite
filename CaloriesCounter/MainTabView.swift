@@ -17,14 +17,13 @@ struct MainTabView: View {
     }
     var body: some View {
         TabView {
-            ContentView(viewModel: FoodListViewModel(foodRepository: entryRepo), libraryViewModel: .init(repository: productRepo))
+            ContentView(viewModel: FoodListViewModel(foodRepository: entryRepo), libraryViewModel: .init(repository: productRepo, mode: .select))
                 .tabItem {
                     Label(String(localized: AppStrings.MainTab.tabLogTitle), systemImage: "calendar")
                 }
 
             FoodLibraryView(
-                viewModel: FoodLibraryViewModel(repository: productRepo),
-                mode: .manage
+                viewModel: FoodLibraryViewModel(repository: productRepo, mode: .manage)
             )
             .tabItem {
                 Label(String(localized: AppStrings.MainTab.tabFoodsTitle), systemImage: "fork.knife")

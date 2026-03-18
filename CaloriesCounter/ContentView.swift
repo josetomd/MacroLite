@@ -64,7 +64,7 @@ struct ContentView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $isShowingLibrary) {
-                    FoodLibraryView(viewModel: libraryViewModel, mode: .select) { newEntry in
+                    FoodLibraryView(viewModel: libraryViewModel) { newEntry in
                         viewModel.addEntry(newEntry)
                     }
                 }
@@ -147,5 +147,5 @@ struct ContentView: View {
     let mockRepo = MockFoodEntryRepository()
     let productRepo = MockFoodProductRepository()
     let _ = mockRepo.foods = FoodEntry.mockList
-    ContentView(viewModel: .init(foodRepository: mockRepo), libraryViewModel: .init(repository: productRepo))
+    ContentView(viewModel: .init(foodRepository: mockRepo), libraryViewModel: .init(repository: productRepo, mode: .manage))
 }

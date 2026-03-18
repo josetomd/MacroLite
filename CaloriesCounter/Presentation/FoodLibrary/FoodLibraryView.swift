@@ -20,7 +20,6 @@ struct FormDestination: Identifiable {
 
 struct FoodLibraryView: View {
     @State var viewModel: FoodLibraryViewModel
-    var mode: LibraryMode
     var onConfirmEntry: ((FoodEntry) -> Void)?
     @Environment(\.dismiss) var dismiss
     @State private var selectedProduct: FoodProduct?
@@ -32,9 +31,9 @@ struct FoodLibraryView: View {
                 if viewModel.filteredProducts.isEmpty {
                     EmptyStateView(
                         icon: "plus.rectangle.on.folder",
-                        title: viewModel.emptyStateTitle,
-                        message: viewModel.emptyStateMessage,
-                        buttonText: viewModel.emptyStateButtonText,
+                        title: AppStrings.Library.EmptyState.title,
+                        message: AppStrings.Library.EmptyState.message,
+                        buttonText: AppStrings.Library.EmptyState.button,
                         action: {
                             formDestination = FormDestination(product: nil)
                         }
@@ -42,7 +41,7 @@ struct FoodLibraryView: View {
                 } else {
                     List {
                         ForEach(viewModel.filteredProducts) { product in
-                            if mode == .select {
+                            if viewModel.mode == .select {
                                 Button {
                                     selectedProduct = product
                                 } label: {
@@ -58,19 +57,17 @@ struct FoodLibraryView: View {
                                 .buttonStyle(.plain)
                             }
                         }
-                        .onDelete(perform: mode == .manage ? deleteProduct : nil)
+                        .onDelete(perform: viewModel.mode == .manage ? deleteProduct : nil)
                     }
                 }
             }
 
-            .navigationTitle(mode == .manage ?
-                             String(localized: viewModel.navigationManageModeTitle) :
-                                String(localized: viewModel.navigationSelectModeTitle))
+            .navigationTitle(String(localized: viewModel.navigationTitle))
             .searchable(text: $viewModel.searchText)
             .toolbar {
-                if mode == .select {
+                if viewModel.mode == .select {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button(String(localized: viewModel.navigationCloseButtonText)) {
+                        Button(String(localized: AppStrings.Library.navigationCloseButton)) {
                             dismiss()
                         }
                     }
@@ -120,9 +117,9 @@ struct FoodLibraryView: View {
 
 #Preview {
     let repo = MockFoodProductRepository()
-    let viewModel = FoodLibraryViewModel(repository: repo)
+    let viewModel = FoodLibraryViewModel(repository: repo, mode: .manage)
     NavigationStack {
-        FoodLibraryView(viewModel: viewModel, mode: .manage) { food in
+        FoodLibraryView(viewModel: viewModel) { food in
             viewModel.loadInitialProducts()
         }
     }
