@@ -613,6 +613,57 @@
         }
       }
     },
+    "log.empty_state.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Food"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir Alimento"
+          }
+        }
+      }
+    },
+    "log.empty_state.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your journal is empty. Log your first meal to start tracking your macros."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu diario está vacío. Registra tu primera comida para empezar a ver tus macros."
+          }
+        }
+      }
+    },
+    "log.empty_state.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What have you eaten today?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Qué has comido hoy?"
+          }
+        }
+      }
+    },
     "macro_breakdown.main_sources" : {
       "extractionState" : "manual",
       "localizations" : {

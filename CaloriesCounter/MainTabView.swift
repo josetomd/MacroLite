@@ -17,7 +17,7 @@ struct MainTabView: View {
     }
     var body: some View {
         TabView {
-            ContentView(viewModel: FoodListViewModel(foodRepository: entryRepo), libraryViewModel: .init(repository: productRepo, mode: .select))
+            LogView(viewModel: FoodListViewModel(foodRepository: entryRepo), libraryViewModel: .init(repository: productRepo, mode: .select))
                 .tabItem {
                     Label(String(localized: AppStrings.MainTab.tabLogTitle), systemImage: "calendar")
                 }

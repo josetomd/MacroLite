@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  LogView.swift
 //  CaloriesCounter
 //
 //  Created by Josset Garcia on 12-03-26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct LogView: View {
     @State var viewModel: FoodListViewModel
     @State private var isShowingLibrary = false
     @State private var entryToEdit: FoodEntry?
@@ -31,9 +31,9 @@ struct ContentView: View {
                         if viewModel.allEntries.isEmpty {
                             EmptyStateView(
                                 icon: "fork.knife.circle",
-                                title: "¿Qué has comido hoy?",
-                                message: "Tu diario está vacío. Registra tu primera comida para empezar a ver tus macros.",
-                                buttonText: "Añadir Alimento",
+                                title: AppStrings.Log.EmptyState.title,
+                                message: AppStrings.Log.EmptyState.message,
+                                buttonText: AppStrings.Log.EmptyState.button,
                                 action: { isShowingLibrary = true }
                             )
                         } else {
@@ -147,5 +147,5 @@ struct ContentView: View {
     let mockRepo = MockFoodEntryRepository()
     let productRepo = MockFoodProductRepository()
     let _ = mockRepo.foods = FoodEntry.mockList
-    ContentView(viewModel: .init(foodRepository: mockRepo), libraryViewModel: .init(repository: productRepo, mode: .manage))
+    LogView(viewModel: .init(foodRepository: mockRepo), libraryViewModel: .init(repository: productRepo, mode: .manage))
 }
