@@ -32,6 +32,8 @@ class FoodProductFormViewModel {
     var keyboardKeyNext = AppStrings.FoodProductForm.Keyboard.next
     var alertTitle = AppStrings.FoodProductForm.alertTitle
     var alertMessage = AppStrings.FoodProductForm.alertMessage
+    var alertButtonDelete = AppStrings.FoodProductForm.alertButtonDelete
+    var alertButtonCancel = AppStrings.FoodProductForm.alertButtonCancel
 
     private let repository: FoodProductRepositoryProtocol
     private var existingProduct: FoodProduct?

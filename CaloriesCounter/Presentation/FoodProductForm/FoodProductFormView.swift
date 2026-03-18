@@ -162,7 +162,12 @@ struct FoodProductFormView: View {
         }
         .alert(String(localized: viewModel.alertTitle), isPresented: $isShowingDeleteConfirmation) {
 
-            Button("", role: .cancel) {}
+            Button(String(localized: viewModel.alertButtonDelete), role: .destructive) {
+                viewModel.delete()
+                onSave()
+                dismiss()
+            }
+            Button(String(localized: viewModel.alertButtonCancel), role: .cancel) {}
         } message: {
             Text(viewModel.alertMessage)
         }

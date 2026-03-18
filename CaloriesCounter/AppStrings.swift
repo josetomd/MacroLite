@@ -56,6 +56,8 @@ struct AppStrings {
         static let deleteButton = LocalizedStringResource("food_product_form.delete_button")
         static let alertTitle = LocalizedStringResource("food_product_form.alert_title")
         static let alertMessage = LocalizedStringResource("food_product_form.alert_message")
+        static let alertButtonDelete = LocalizedStringResource("food_product_form.alert_button_delete")
+        static let alertButtonCancel = LocalizedStringResource("food_product_form.alert_button_cancel")
 
         struct Keyboard{
             static let done = LocalizedStringResource("food_product_form.keyboard.done")
