@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MacroStatView: View {
-    let title: String
+    let title: LocalizedStringResource
     let value: Double
     let goal: Double
     let color: Color

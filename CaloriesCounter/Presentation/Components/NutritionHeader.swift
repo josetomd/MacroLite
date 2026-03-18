@@ -13,7 +13,7 @@ struct NutritionHeader: View {
     var body: some View {
         VStack(spacing: 25) {
             MacroStatView(
-                title: "Calorías Totales",
+                title: AppStrings.NutritionHeader.totalCalories,
                 value: Double(summary.totalCalories),
                 goal: summary.caloriesGoal,
                 color: .primary,
@@ -26,9 +26,9 @@ struct NutritionHeader: View {
             HStack(spacing: 25) {
                 MacroStatView(title: "Carbs", value: summary.totalCarbs, goal: summary.carbsGoal, color: .blue, unit: "g")
                     .onTapGesture { selectedMacro = .carbs }
-                MacroStatView(title: "Proteína", value: summary.totalProteins, goal: summary.proteinGoal, color: .purple, unit: "g")
+                MacroStatView(title: MacroType.protein.label, value: summary.totalProteins, goal: summary.proteinGoal, color: .purple, unit: "g")
                     .onTapGesture { selectedMacro = .protein }
-                MacroStatView(title: "Grasas", value: summary.totalFats, goal: summary.fatGoal, color: .orange, unit: "g")
+                MacroStatView(title: MacroType.fats.label, value: summary.totalFats, goal: summary.fatGoal, color: .orange, unit: "g")
                     .onTapGesture { selectedMacro = .fats }
             }
         }

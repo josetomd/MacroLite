@@ -87,8 +87,21 @@ struct AppStrings {
         static let fats = LocalizedStringResource("macro.label.fats")
     }
 
+    struct FoodProductRow {
+        static let per = LocalizedStringResource("food_product_row.per")
+    }
+
+    struct NutritionHeader {
+        static let totalCalories = LocalizedStringResource("nutrition_header.total_calories")
+    }
+
+    struct MealSection {
+        static let emptyTitle = LocalizedStringResource("meal_section.empty_title")
+        static let menuEditTitle = LocalizedStringResource("meal_section.menu_edit_title")
+        static let menuDeleteTitle = LocalizedStringResource("meal_section.menu_delete_title")
+    }
     struct Alert {
         static let cancelButton = LocalizedStringResource("alert.cancel_button")
-        static let deleteButton = LocalizedStringResource("alert.delete_Button")
+        static let deleteButton = LocalizedStringResource("alert.delete_button")
     }
 }

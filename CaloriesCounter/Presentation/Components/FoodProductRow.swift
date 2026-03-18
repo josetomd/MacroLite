@@ -42,9 +42,13 @@ struct FoodProductRow: View {
                     .font(.subheadline)
                     .fontWeight(.bold)
                 
-                Text("por \(Int(product.grams))g")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 0) {
+                    Text(AppStrings.FoodProductRow.per)
+                    Text(" \(Int(product.grams)) ")
+                    Text("g")
+                }
+                .font(.caption2)
+                .foregroundColor(.secondary)
             }
         }
         .padding(.vertical, 4)

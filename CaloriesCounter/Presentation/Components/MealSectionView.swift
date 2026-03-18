@@ -34,7 +34,7 @@ struct MealSectionView: View {
 
             VStack(spacing: 0) {
                 if entries.isEmpty {
-                    Text("No hay registros")
+                    Text(AppStrings.MealSection.emptyTitle)
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .padding()
@@ -48,14 +48,14 @@ struct MealSectionView: View {
                                 Button {
                                     selectedEntry = food
                                 } label: {
-                                    Label("Editar", systemImage: "pencil")
+                                    Label(String(localized: AppStrings.MealSection.menuEditTitle), systemImage: "pencil")
                                 }
 
                                 Button(role: .destructive) {
                                     isShowingDeleteConfirmation = true
                                     selectedID = food.id
                                 } label: {
-                                    Label("Eliminar", systemImage: "trash")
+                                    Label(String(localized: AppStrings.MealSection.menuDeleteTitle), systemImage: "trash")
                                 }
                             }
                         if food.id != entries.last?.id {
@@ -68,14 +68,14 @@ struct MealSectionView: View {
             .padding(.vertical, 8)
             .background(Color(.secondarySystemBackground).opacity(0.5))
             .cornerRadius(12)
-            .alert("¿Eliminar Alimento?", isPresented: $isShowingDeleteConfirmation) {
-                Button("Eliminar", role: .destructive) {
+            .alert(String(localized: AppStrings.FoodDetails.alertTitle), isPresented: $isShowingDeleteConfirmation) {
+                Button(String(localized: AppStrings.Alert.deleteButton), role: .destructive) {
                     onDelete(selectedID!)
                     selectedID = nil
                 }
-                Button("Cancelar", role: .cancel) { }
+                Button(String(localized: AppStrings.Alert.cancelButton), role: .cancel) { }
             } message: {
-                Text("Esta acción eliminará la comida del diario")
+                Text(AppStrings.FoodDetails.alertMessage)
             }
         }
         .padding(.horizontal)
