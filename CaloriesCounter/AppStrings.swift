@@ -32,6 +32,18 @@ struct AppStrings {
         static let tabFoodsTitle = LocalizedStringResource("maintab.foods.title")
     }
 
+    struct Library {
+        struct EmptyState {
+            static let title = LocalizedStringResource("library.emptystate.title")
+            static let message = LocalizedStringResource("library.emptystate.message")
+            static let button = LocalizedStringResource("library.emptystate.button")
+        }
+
+        static let navigationManageModeTitle = LocalizedStringResource("library.navigation.manage_title")
+        static let navigationSelectModeTitle = LocalizedStringResource("library.navigation.select_title")
+        static let navigationCloseButton = LocalizedStringResource("library.navigation.close_button")
+    }
+
     struct Macros {
         static let calories = LocalizedStringResource("macro.label.calories")
         static let protein = LocalizedStringResource("macro.label.protein")

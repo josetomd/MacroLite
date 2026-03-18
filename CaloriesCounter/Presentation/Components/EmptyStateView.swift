@@ -10,9 +10,9 @@ import SwiftUI
 struct EmptyStateView: View {
     @State private var isAnimating = false
     let icon: String
-    let title: String
-    let message: String
-    let buttonText: String?
+    let title: LocalizedStringResource
+    let message: LocalizedStringResource
+    let buttonText: LocalizedStringResource?
     let action: (() -> Void)?
 
     var body: some View {

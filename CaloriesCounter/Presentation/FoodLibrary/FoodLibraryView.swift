@@ -31,14 +31,14 @@ struct FoodLibraryView: View {
             Group {
                 if viewModel.filteredProducts.isEmpty {
                     EmptyStateView(
-                            icon: "plus.rectangle.on.folder",
-                            title: "Catálogo vacío",
-                            message: "Crea tus propios alimentos o productos personalizados para tenerlos siempre a mano.",
-                            buttonText: "Crear Producto",
-                            action: {
-                                formDestination = FormDestination(product: nil)
-                            }
-                        )
+                        icon: "plus.rectangle.on.folder",
+                        title: AppStrings.Library.EmptyState.title,
+                        message: AppStrings.Library.EmptyState.message,
+                        buttonText: AppStrings.Library.EmptyState.button,
+                        action: {
+                            formDestination = FormDestination(product: nil)
+                        }
+                    )
                 } else {
                     List {
                         ForEach(viewModel.filteredProducts) { product in
@@ -63,12 +63,14 @@ struct FoodLibraryView: View {
                 }
             }
 
-            .navigationTitle(mode == .manage ? "Mis Alimentos" : "Seleccionar")
+            .navigationTitle(mode == .manage ?
+                 String(localized: AppStrings.Library.navigationManageModeTitle) :
+                 String(localized: AppStrings.Library.navigationSelectModeTitle))
             .searchable(text: $viewModel.searchText)
             .toolbar {
                 if mode == .select {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Cerrar") {
+                        Button(String(localized: AppStrings.Library.navigationCloseButton)) {
                             dismiss()
                         }
                     }
