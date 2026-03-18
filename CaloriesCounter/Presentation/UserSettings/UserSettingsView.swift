@@ -16,45 +16,45 @@ struct UserSettingsView: View {
         NavigationStack {
             Form {
                 Section {
-                    settingRow(label: "Calorías", value: $settings.targetCalories, unit: "kcal", type: .calories, range: 500...10000)
-                    settingRow(label: "Proteínas", value: $settings.targetProtein, unit: "g", type: .protein, range: 10...500)
-                    settingRow(label: "Carbohidratos", value: $settings.targetCarbs, unit: "g", type: .carbs, range: 10...500)
-                    settingRow(label: "Grasas", value: $settings.targetFats, unit: "g", type: .fats, range: 5...300)
+                    settingRow(label: MacroType.calories.label, value: $settings.targetCalories, unit: "kcal", type: .calories, range: 500...10000)
+                    settingRow(label: MacroType.protein.label, value: $settings.targetProtein, unit: "g", type: .protein, range: 10...500)
+                    settingRow(label: MacroType.carbs.label, value: $settings.targetCarbs, unit: "g", type: .carbs, range: 10...500)
+                    settingRow(label: MacroType.fats.label, value: $settings.targetFats, unit: "g", type: .fats, range: 5...300)
                 } header: {
-                    Text("Metas Diarias")
+                    Text(AppStrings.Settings.dailyGoals)
                 } footer: {
                     if !settings.isFormValid {
-                        Text("Por favor, introduce valores realistas.")
+                        Text(AppStrings.Settings.validation)
                             .foregroundColor(.red)
                     }
                 }
                 
                 Section {
-                    Text("Estas metas definirán el progreso de tus anillos en la pantalla principal.")
+                    Text(AppStrings.Settings.goalsDescription)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("Ajustes")
+            .navigationTitle(String(localized: AppStrings.Settings.Navigation.title))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Hecho") { dismiss() }
+                    Button(String(localized: AppStrings.Settings.Navigation.done)) { dismiss() }
                         .disabled(!settings.isFormValid)
                 }
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
-                    Button("Cerrar") { focusedField = nil }
+                    Button(String(localized: AppStrings.Settings.Navigation.close)) { focusedField = nil }
                 }
             }
         }
     }
     
-    private func settingRow(label: String, value: Binding<Double>, unit: String, type: MacroType, range: ClosedRange<Double>) -> some View {
+    private func settingRow(label: LocalizedStringResource, value: Binding<Double>, unit: String, type: MacroType, range: ClosedRange<Double>) -> some View {
         let isValid = range.contains(value.wrappedValue)
         
         return HStack {
-            Label(label, systemImage: iconFor(type))
+            Label(String(localized: label), systemImage: iconFor(type))
                 .foregroundStyle(isValid ? type.color : .red)
             Spacer()
             TextField("", value: value, formatter: NumberFormatter())

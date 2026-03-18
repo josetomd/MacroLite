@@ -120,7 +120,19 @@ struct AppStrings {
             static let button = LocalizedStringResource("log.empty_state.button")
         }
     }
-    
+
+    struct Settings {
+        static let dailyGoals = LocalizedStringResource("settings.daily_goals")
+        static let validation = LocalizedStringResource("settings.validation")
+        static let goalsDescription = LocalizedStringResource("settings.goals_description")
+
+        struct Navigation {
+            static let title = LocalizedStringResource("settings.navigation.title")
+            static let done = LocalizedStringResource("settings.navigation.done")
+            static let close = LocalizedStringResource("settings.navigation.close")
+        }
+    }
+
     struct Alert {
         static let cancelButton = LocalizedStringResource("alert.cancel_button")
         static let deleteButton = LocalizedStringResource("alert.delete_button")
