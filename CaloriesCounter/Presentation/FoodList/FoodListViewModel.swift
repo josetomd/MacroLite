@@ -49,6 +49,7 @@ class FoodListViewModel {
 
         do {
             try foodRepository.save(finalEntry)
+            SoundManager.shared.play(sound: .success)
         } catch {
             handleError(error)
         }
@@ -58,6 +59,7 @@ class FoodListViewModel {
     func updateEntry(_ entry: FoodEntry) {
         do {
             try foodRepository.update(entry)
+            SoundManager.shared.play(sound: .success)
         } catch {
             handleError(error)
         }
@@ -67,6 +69,7 @@ class FoodListViewModel {
     func deleteEntry(id: UUID) {
         do {
             try foodRepository.delete(id: id)
+            SoundManager.shared.play(sound: .delete)
         } catch {
             handleError(error)
         }
@@ -76,5 +79,6 @@ class FoodListViewModel {
     private func handleError(_ error: Error) {
         self.errorMessage = error.localizedDescription
         self.showErrorMessage = true
+        SoundManager.shared.play(sound: .error)
     }
 }

@@ -25,10 +25,15 @@ class UserSettings {
     }
 
     var isFormValid: Bool {
-        targetCalories >= 500 && targetCalories <= 10000 &&
+        let bool = targetCalories >= 500 && targetCalories <= 10000 &&
         targetProtein >= 10 &&
         targetCarbs >= 10 &&
         targetFats >= 5
+
+        if !bool {
+            SoundManager.shared.play(sound: .error)
+        }
+        return bool
     }
 
     init() {

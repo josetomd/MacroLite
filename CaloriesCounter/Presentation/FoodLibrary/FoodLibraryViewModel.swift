@@ -53,6 +53,7 @@ class FoodLibraryViewModel {
             let product = self.filteredProducts[index]
             do {
                 try repository.deleteProduct(id: product.id)
+                SoundManager.shared.play(sound: .delete)
             } catch {
                 handleError(error)
             }
@@ -62,5 +63,6 @@ class FoodLibraryViewModel {
     private func handleError(_ error: Error) -> Void {
         errorMessage = error.localizedDescription
         showMessage = true
+        SoundManager.shared.play(sound: .error)
     }
 }

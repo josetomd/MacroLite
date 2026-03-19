@@ -52,6 +52,11 @@ struct OnboardingView: View {
             .padding(.bottom, 30)
         }
         .onChange(of: currentPage) { focusedField = false }
+        .onChange(of: isFormValid) {
+            if !isFormValid {
+                SoundManager.shared.play(sound: .error)
+            }
+        }
     }
 
     private var goalsConfigStep: some View {

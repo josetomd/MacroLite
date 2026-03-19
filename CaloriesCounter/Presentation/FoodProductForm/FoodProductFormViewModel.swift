@@ -67,7 +67,9 @@ class FoodProductFormViewModel {
                 )
                 try repository.saveProduct(newProduct)
             }
+            SoundManager.shared.play(sound: .success)
         } catch {
+            SoundManager.shared.play(sound: .error)
             errorMessage = error.localizedDescription
             showError = true
         }
@@ -77,7 +79,9 @@ class FoodProductFormViewModel {
         if let id = existingProduct?.id {
             do {
                 try repository.deleteProduct(id: id)
+                SoundManager.shared.play(sound: .delete)
             } catch {
+                SoundManager.shared.play(sound: .error      )
                 errorMessage = error.localizedDescription
                 showError = true
             }
