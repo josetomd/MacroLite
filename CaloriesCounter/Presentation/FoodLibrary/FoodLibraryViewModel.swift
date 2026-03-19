@@ -54,6 +54,7 @@ class FoodLibraryViewModel {
             do {
                 try repository.deleteProduct(id: product.id)
                 SoundManager.shared.play(sound: .delete)
+                HapticManager.shared.triggerNotification(type: .success)
             } catch {
                 handleError(error)
             }
@@ -64,5 +65,6 @@ class FoodLibraryViewModel {
         errorMessage = error.localizedDescription
         showMessage = true
         SoundManager.shared.play(sound: .error)
+        HapticManager.shared.triggerNotification(type: .error)
     }
 }

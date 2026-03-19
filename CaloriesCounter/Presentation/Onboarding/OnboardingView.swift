@@ -54,6 +54,7 @@ struct OnboardingView: View {
         .onChange(of: currentPage) { focusedField = false }
         .onChange(of: isFormValid) {
             if !isFormValid {
+                HapticManager.shared.triggerNotification(type: .error)
                 SoundManager.shared.play(sound: .error)
             }
         }

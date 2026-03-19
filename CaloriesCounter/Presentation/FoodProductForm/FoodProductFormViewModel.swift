@@ -81,7 +81,8 @@ class FoodProductFormViewModel {
                 try repository.deleteProduct(id: id)
                 SoundManager.shared.play(sound: .delete)
             } catch {
-                SoundManager.shared.play(sound: .error      )
+                SoundManager.shared.play(sound: .error)
+                HapticManager.shared.triggerNotification(type: .error)
                 errorMessage = error.localizedDescription
                 showError = true
             }

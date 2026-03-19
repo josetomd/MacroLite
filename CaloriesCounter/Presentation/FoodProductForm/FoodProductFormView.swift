@@ -121,6 +121,7 @@ struct FoodProductFormView: View {
             if viewModel.isEditing {
                 Button(role: .destructive) {
                     isShowingDeleteConfirmation = true
+                    HapticManager.shared.triggerNotification(type: .warning)
                 } label: {
                     Label(String(localized: AppStrings.FoodProductForm.deleteButton), systemImage: "trash")
                         .fontWeight(.bold)

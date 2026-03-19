@@ -11,7 +11,7 @@ struct UserSettingsView: View {
     @Bindable var settings: UserSettings
     @Environment(\.dismiss) private var dismiss
     @FocusState private var focusedField: MacroType?
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -28,7 +28,7 @@ struct UserSettingsView: View {
                             .foregroundColor(.red)
                     }
                 }
-                
+
                 Section {
                     Text(AppStrings.Settings.goalsDescription)
                         .font(.caption)
@@ -39,8 +39,11 @@ struct UserSettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(String(localized: AppStrings.Settings.Navigation.done)) { dismiss() }
-                        .disabled(!settings.isFormValid)
+                    Button(String(localized: AppStrings.Settings.Navigation.done)) {
+                        HapticManager.shared.triggerNotification(type: .success)
+                        dismiss()
+                    }
+                    .disabled(!settings.isFormValid)
                 }
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -49,10 +52,10 @@ struct UserSettingsView: View {
             }
         }
     }
-    
+
     private func settingRow(label: LocalizedStringResource, value: Binding<Double>, unit: String, type: MacroType, range: ClosedRange<Double>) -> some View {
         let isValid = range.contains(value.wrappedValue)
-        
+
         return HStack {
             Label(String(localized: label), systemImage: iconFor(type))
                 .foregroundStyle(isValid ? type.color : .red)
@@ -67,7 +70,7 @@ struct UserSettingsView: View {
                 .foregroundStyle(.secondary)
         }
     }
-    
+
     private func iconFor(_ type: MacroType) -> String {
         switch type {
         case .calories: return "flame.fill"
