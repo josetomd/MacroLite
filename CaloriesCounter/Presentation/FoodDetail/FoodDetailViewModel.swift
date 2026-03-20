@@ -29,15 +29,17 @@ class FoodDetailViewModel {
     var totalGrams: Double {
         product.grams * Double(selectedAmount)
     }
-
+    private let hapticManager: HapticProvider
     init(product: FoodProduct,
          amount: Int = 1,
          mealType: MealType? = nil,
-         entryId: UUID? = nil) {
+         entryId: UUID? = nil,
+         hapticManager: HapticProvider = HapticManager.shared ) {
         self.product = product
         self.selectedAmount = amount
         self.selectedMealType = mealType ?? .breakfast
         self.entryId = entryId
+        self.hapticManager = hapticManager
     }
 
     func createEntry() -> FoodEntry {
@@ -55,6 +57,6 @@ class FoodDetailViewModel {
         } else {
             selectedAmount += num
         }
-        HapticManager.shared.triggerImpact(style: .light)
+        hapticManager.triggerImpact(style: .light)
     }
 }

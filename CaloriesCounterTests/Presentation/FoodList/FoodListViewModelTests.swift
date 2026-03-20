@@ -17,7 +17,7 @@ struct FoodListViewModelTests {
         let food2 = FoodEntry(name: "Pollo", calories: 300, proteins: 30, carbohydrates: 0, fats: 5, grams: 200, amount: 1, mealType: .lunch, date: .now)
         mockRepo.foods = [food1, food2]
 
-        let sut = FoodListViewModel(foodRepository: mockRepo)
+        let sut = FoodListViewModel(foodRepository: mockRepo, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.loadData()
 
@@ -33,7 +33,7 @@ struct FoodListViewModelTests {
             FoodEntry(name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now),
             FoodEntry(name: "Tostada", calories: 150, proteins: 3, carbohydrates: 20, fats: 2, grams: 30, amount: 1, mealType: .breakfast, date: .now)
         ]
-        let sut = FoodListViewModel(foodRepository: mockRepo)
+        let sut = FoodListViewModel(foodRepository: mockRepo, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.loadData()
 
@@ -49,7 +49,7 @@ struct FoodListViewModelTests {
             FoodEntry(name: "Tostada", calories: 150, proteins: 3, carbohydrates: 20, fats: 2, grams: 30, amount: 1, mealType: .breakfast, date: tomorrow)
         ]
 
-        let sut = FoodListViewModel(foodRepository: mockRepo)
+        let sut = FoodListViewModel(foodRepository: mockRepo, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
         sut.loadData()
 
         #expect(sut.allEntries.count == 1)
@@ -68,7 +68,7 @@ struct FoodListViewModelTests {
         let avena = FoodEntry(id: id, name: "Avena", calories: 200, proteins: 5, carbohydrates: 30, fats: 3, grams: 50, amount: 1, mealType: .breakfast, date: .now)
         mockRepo.foods = [avena]
 
-        let sut = FoodListViewModel(foodRepository: mockRepo)
+        let sut = FoodListViewModel(foodRepository: mockRepo, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
         sut.loadData()
 
         sut.deleteEntry(id: id)

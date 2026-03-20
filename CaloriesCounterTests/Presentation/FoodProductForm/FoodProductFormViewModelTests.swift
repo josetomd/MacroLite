@@ -14,7 +14,7 @@ struct FoodProductFormViewModelTests {
     @Test func save_newProduct_addsToRepository() throws {
         let repositoryMock = MockFoodProductRepository()
         repositoryMock.products = []
-        let sut = FoodProductFormViewModel(repository: repositoryMock)
+        let sut = FoodProductFormViewModel(repository: repositoryMock, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.name = "Avena"
         sut.calories = "100"
@@ -39,7 +39,7 @@ struct FoodProductFormViewModelTests {
         let repositoryMock = MockFoodProductRepository()
         let product = FoodProduct(name: "Manzana", calories: 52, proteins: 0.3, carbohydrates: 14, fats: 0.2, grams: 100)
 
-        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product)
+        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         #expect(sut.name == "Manzana")
         #expect(sut.calories == "52")
@@ -55,7 +55,7 @@ struct FoodProductFormViewModelTests {
         
         repositoryMock.products = [product]
         
-        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product)
+        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.name = "Manzana Roja"
         sut.calories = "32"
@@ -73,7 +73,7 @@ struct FoodProductFormViewModelTests {
 
         repositoryMock.products = [product]
 
-        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product)
+        let sut = FoodProductFormViewModel(repository: repositoryMock, product: product, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.delete()
 
@@ -94,7 +94,7 @@ struct FoodProductFormViewModelTests {
     @Test func givenStringsWithCommaAndDot_save_saveProductCorrectly() {
         let repositoryMock = MockFoodProductRepository()
         repositoryMock.products = []
-        let sut = FoodProductFormViewModel(repository: repositoryMock)
+        let sut = FoodProductFormViewModel(repository: repositoryMock, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.name = "Test"
         sut.calories = "100,5"

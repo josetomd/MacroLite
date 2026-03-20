@@ -21,11 +21,19 @@ class FoodProductFormViewModel {
 
     private let repository: FoodProductRepositoryProtocol
     private var existingProduct: FoodProduct?
+    private let hapticManager: HapticProvider
+    private let soundManager: SoundProvider
 
     var isEditing: Bool { existingProduct != nil}
 
-    init(repository: FoodProductRepositoryProtocol, product: FoodProduct? = nil) {
+    init(repository: FoodProductRepositoryProtocol,
+         product: FoodProduct? = nil,
+         hapticManager: HapticProvider = HapticManager.shared,
+         soundManager: SoundProvider = SoundManager.shared
+    ) {
         self.repository = repository
+        self.hapticManager = hapticManager
+        self.soundManager = soundManager
         if let p = product {
             self.existingProduct = p
             self.name = p.name
@@ -79,11 +87,11 @@ class FoodProductFormViewModel {
         if let id = existingProduct?.id {
             do {
                 try repository.deleteProduct(id: id)
-                SoundManager.shared.play(sound: .delete)
-                HapticManager.shared.triggerImpact(style: .medium)
+                soundManager.play(sound: .delete)
+                hapticManager.triggerImpact(style: .medium)
             } catch {
-                SoundManager.shared.play(sound: .error)
-                HapticManager.shared.triggerNotification(type: .error)
+                soundManager.play(sound: .error)
+                hapticManager.triggerNotification(type: .error)
                 errorMessage = error.localizedDescription
                 showError = true
             }

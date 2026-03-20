@@ -15,6 +15,7 @@ class FoodLibraryViewModel {
     var showMessage: Bool = false
     var mode: LibraryMode
     var preSelectedMealType: MealType? = nil
+
     var navigationTitle: LocalizedStringResource {
         mode == .manage ? AppStrings.Library.navigationManageModeTitle : AppStrings.Library.navigationSelectModeTitle
     }
@@ -22,10 +23,17 @@ class FoodLibraryViewModel {
     private(set) var filteredProducts: [FoodProduct] = []
 
     private let repository: FoodProductRepositoryProtocol
+    private let hapticManager: HapticProvider
+    private let soundManager: SoundProvider
 
-    init(repository: FoodProductRepositoryProtocol, mode: LibraryMode) {
+    init(repository: FoodProductRepositoryProtocol,
+         mode: LibraryMode,
+         hapticManager: HapticProvider = HapticManager.shared,
+         soundManager: SoundProvider = SoundManager.shared) {
         self.repository = repository
         self.mode = mode
+        self.hapticManager = hapticManager
+        self.soundManager = soundManager
         loadInitialProducts()
     }
 
@@ -54,8 +62,8 @@ class FoodLibraryViewModel {
             let product = self.filteredProducts[index]
             do {
                 try repository.deleteProduct(id: product.id)
-                SoundManager.shared.play(sound: .delete)
-                HapticManager.shared.triggerNotification(type: .success)
+                soundManager.play(sound: .delete)
+                hapticManager.triggerNotification(type: .success)
             } catch {
                 handleError(error)
             }
@@ -65,7 +73,7 @@ class FoodLibraryViewModel {
     private func handleError(_ error: Error) -> Void {
         errorMessage = error.localizedDescription
         showMessage = true
-        SoundManager.shared.play(sound: .error)
-        HapticManager.shared.triggerNotification(type: .error)
+        soundManager.play(sound: .error)
+        hapticManager.triggerNotification(type: .error)
     }
 }

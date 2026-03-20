@@ -14,7 +14,7 @@ enum SoundEffect: String {
     case delete = "delete"
 }
 
-class SoundManager {
+class SoundManager: SoundProvider {
     static let shared = SoundManager()
     private var player: AVAudioPlayer?
 

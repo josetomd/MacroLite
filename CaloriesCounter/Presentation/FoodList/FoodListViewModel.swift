@@ -16,6 +16,8 @@ class FoodListViewModel {
     var userSettings = UserSettings()
     var allEntries: [FoodEntry] = []
     private let foodRepository: FoodEntryRepositoryProtocol
+    private let hapticManager: HapticProvider
+    private let soundManager: SoundProvider
 
     var groupedFoods: [MealType: [FoodEntry]] {
         Dictionary(grouping: allEntries) { $0.mealType }
@@ -34,8 +36,12 @@ class FoodListViewModel {
         )
     }
 
-    init(foodRepository: FoodEntryRepositoryProtocol) {
+    init(foodRepository: FoodEntryRepositoryProtocol,
+    hapticManager: HapticProvider = HapticManager.shared,
+    soundManager: SoundProvider = SoundManager.shared) {
         self.foodRepository = foodRepository
+        self.hapticManager = hapticManager
+        self.soundManager = soundManager
         loadData()
     }
 
@@ -53,7 +59,7 @@ class FoodListViewModel {
 
         do {
             try foodRepository.save(finalEntry)
-            SoundManager.shared.play(sound: .success)
+            soundManager.play(sound: .success)
         } catch {
             handleError(error)
         }
@@ -63,7 +69,7 @@ class FoodListViewModel {
     func updateEntry(_ entry: FoodEntry) {
         do {
             try foodRepository.update(entry)
-            SoundManager.shared.play(sound: .success)
+            soundManager.play(sound: .success)
         } catch {
             handleError(error)
         }
@@ -73,7 +79,7 @@ class FoodListViewModel {
     func deleteEntry(id: UUID) {
         do {
             try foodRepository.delete(id: id)
-            SoundManager.shared.play(sound: .delete)
+            soundManager.play(sound: .delete)
         } catch {
             handleError(error)
         }
@@ -83,6 +89,6 @@ class FoodListViewModel {
     private func handleError(_ error: Error) {
         self.errorMessage = error.localizedDescription
         self.showErrorMessage = true
-        SoundManager.shared.play(sound: .error)
+        soundManager.play(sound: .error)
     }
 }

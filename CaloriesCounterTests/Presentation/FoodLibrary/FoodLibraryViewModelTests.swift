@@ -17,7 +17,7 @@ struct FoodLibraryViewModelTests {
         let avena = FoodProduct(name: "Avena", calories: 389, proteins: 16.9, carbohydrates: 66, fats: 6.9, grams: 100)
         mockRepo.products = [pechuga, avena]
 
-        let sut = FoodLibraryViewModel(repository: mockRepo, mode: .select)
+        let sut = FoodLibraryViewModel(repository: mockRepo, mode: .select, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
 
         sut.searchText = "Pe"
         sut.performSearch()
@@ -31,7 +31,7 @@ struct FoodLibraryViewModelTests {
         let pechuga = FoodProduct(name: "Pechuga de Pollo", calories: 165, proteins: 31, carbohydrates: 0, fats: 3.6, grams: 100)
         mockRepo.products = [pechuga]
 
-        let sut = FoodLibraryViewModel(repository: mockRepo, mode: .manage)
+        let sut = FoodLibraryViewModel(repository: mockRepo, mode: .manage, hapticManager: MockHapticManager(), soundManager: MockSoundManager())
         sut.loadInitialProducts()
 
         sut.deleteProduct(offsets: .init(integer: 0))

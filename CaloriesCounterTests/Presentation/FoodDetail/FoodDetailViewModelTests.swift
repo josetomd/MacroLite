@@ -16,7 +16,7 @@ struct FoodDetailViewModelTests {
         let product = FoodProduct(name: "Avena", calories: 100, proteins: 20, carbohydrates: 30, fats: 40, grams: 50)
         let entry = FoodEntry(id: id, name: "Avena", calories: 100, proteins: 20, carbohydrates: 30, fats: 40, grams: 50, amount: 1, mealType: .breakfast, date: .now)
 
-        let sut = FoodDetailViewModel(product: product, entryId: id)
+        let sut = FoodDetailViewModel(product: product, entryId: id, hapticManager: MockHapticManager())
         let createdEntry = sut.createEntry()
 
         #expect(createdEntry.id == id)
