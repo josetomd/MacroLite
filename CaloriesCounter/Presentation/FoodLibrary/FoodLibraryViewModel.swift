@@ -14,6 +14,7 @@ class FoodLibraryViewModel {
     var errorMessage: String?
     var showMessage: Bool = false
     var mode: LibraryMode
+    var preSelectedMealType: MealType? = nil
     var navigationTitle: LocalizedStringResource {
         mode == .manage ? AppStrings.Library.navigationManageModeTitle : AppStrings.Library.navigationSelectModeTitle
     }

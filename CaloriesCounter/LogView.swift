@@ -12,7 +12,9 @@ struct LogView: View {
     @State private var isShowingLibrary = false
     @State private var entryToEdit: FoodEntry?
     @State private var selectedMacro: MacroType?
+    @State private var selectedMealType: MealType?
     @State private var settings = UserSettings()
+    @State private var isFloating = false
     @State private var showingSettings = false
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
 
@@ -23,7 +25,7 @@ struct LogView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottomTrailing) {
             NavigationStack {
                 ScrollView(showsIndicators: false) {
                     VStack {
@@ -42,10 +44,15 @@ struct LogView: View {
                                     MealSectionView(
                                         title: mealType.label,
                                         entries: viewModel.groupedFoods[mealType] ?? [],
-                                        selectedEntry: $entryToEdit
-                                    ) { id in
-                                        viewModel.deleteEntry(id: id)
-                                    }
+                                        selectedEntry: $entryToEdit,
+                                        onAdd: {
+                                            libraryViewModel.preSelectedMealType = mealType
+                                            self.isShowingLibrary = true
+                                        },
+                                        onDelete: { id in
+                                            viewModel.deleteEntry(id: id)
+                                        })
+
                                 }
                             }
                         }
@@ -67,9 +74,10 @@ struct LogView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $isShowingLibrary) {
-                    FoodLibraryView(viewModel: libraryViewModel) { newEntry in
+                    FoodLibraryView(viewModel: libraryViewModel, selectedMealType: selectedMealType) { newEntry in
                         viewModel.addEntry(newEntry)
                     }
+                    .id(selectedMealType)
                 }
                 .toolbar {
                     ToolbarItem(placement: .principal) {

@@ -14,6 +14,7 @@ struct MealSectionView: View {
     let entries: [FoodEntry]
     @Binding var selectedEntry: FoodEntry?
 
+    var onAdd: () -> Void
     var onDelete: (UUID) -> Void
     var totalCalories: Int {
         entries.reduce(0) { $0 + ($1.calories * Int($1.amount)) }

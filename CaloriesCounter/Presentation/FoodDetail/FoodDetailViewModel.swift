@@ -32,11 +32,11 @@ class FoodDetailViewModel {
 
     init(product: FoodProduct,
          amount: Int = 1,
-         mealType: MealType = .breakfast,
+         mealType: MealType? = nil,
          entryId: UUID? = nil) {
         self.product = product
         self.selectedAmount = amount
-        self.selectedMealType = mealType
+        self.selectedMealType = mealType ?? .breakfast
         self.entryId = entryId
     }
 

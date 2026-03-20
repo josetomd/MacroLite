@@ -20,6 +20,7 @@ struct FormDestination: Identifiable {
 
 struct FoodLibraryView: View {
     @State var viewModel: FoodLibraryViewModel
+    var selectedMealType: MealType? = nil
     var onConfirmEntry: ((FoodEntry) -> Void)?
     @Environment(\.dismiss) var dismiss
     @State private var selectedProduct: FoodProduct?
@@ -85,7 +86,7 @@ struct FoodLibraryView: View {
                 viewModel.performSearch()
             }
             .navigationDestination(item: $selectedProduct) { product in
-                let detailVM = FoodDetailViewModel(product: product)
+                let detailVM = FoodDetailViewModel(product: product, mealType: viewModel.preSelectedMealType)
 
                 FoodDetailView(viewModel: detailVM) { entry in
                     onConfirmEntry?(entry)
