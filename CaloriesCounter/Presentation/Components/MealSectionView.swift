@@ -65,6 +65,17 @@ struct MealSectionView: View {
                     }
                     .padding(.horizontal)
                 }
+                Button(action: onAdd) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text(AppStrings.Log.EmptyState.button)
+                        Spacer()
+                    }
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .padding()
+
+                }
             }
             .padding(.vertical, 8)
             .background(Color(.secondarySystemBackground).opacity(0.5))
@@ -85,5 +96,5 @@ struct MealSectionView: View {
 
 #Preview {
     @Previewable @State var selectedEntry: FoodEntry? = FoodEntry.mockList.first!
-    MealSectionView(title: AppStrings.MealType.breakfast, entries: FoodEntry.mockList, selectedEntry: $selectedEntry) { _ in }
+    MealSectionView(title: AppStrings.MealType.breakfast, entries: FoodEntry.mockList, selectedEntry: $selectedEntry, onAdd: {}, onDelete: {_ in })
 }

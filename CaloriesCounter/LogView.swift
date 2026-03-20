@@ -140,6 +140,33 @@ struct LogView: View {
                 ))
             }
 
+            if !viewModel.allEntries.isEmpty {
+                Button {
+                    HapticManager.shared.triggerImpact(style: .medium)
+                    isShowingLibrary = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.title.bold())
+                        .foregroundColor(.white)
+                        .frame(width: 60, height: 60)
+                        .background(
+                            Circle()
+                                .fill(LinearGradient(colors: [.accentColor, .accentColor.opacity(0.8)],
+                                                     startPoint: .topLeading,
+                                                     endPoint: .bottomTrailing))
+                        )
+                        .shadow(color: .accentColor.opacity(0.3), radius: 10, x: 0, y: isFloating ? 12 : 6)
+                }
+                .offset(y: isFloating ? -5 : 5)
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                        isFloating = true
+                    }
+                }
+                .padding(.trailing, 25)
+                .padding(.bottom, 30)
+            }
+
             if let type = selectedMacro {
                 let targetGoal = switch type {
                 case .calories: settings.targetCalories
