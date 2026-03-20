@@ -12,8 +12,8 @@ struct NutritionSummary {
     let totalProteins: Double
     let totalFats: Double
 
-    let caloriesGoal: Double = 2500
-    let carbsGoal: Double = 250
-    let proteinGoal: Double = 140
-    let fatGoal: Double = 70
+    let caloriesGoal: Double
+    let carbsGoal: Double
+    let proteinGoal: Double
+    let fatGoal: Double
 }

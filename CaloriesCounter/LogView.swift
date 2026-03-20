@@ -51,6 +51,9 @@ struct LogView: View {
                         }
                     }
                 }
+                .onAppear {
+                    viewModel.userSettings = settings
+                }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button { isShowingLibrary = true } label: {
@@ -114,6 +117,9 @@ struct LogView: View {
                 }
                 .sheet(isPresented: $showingSettings) {
                     UserSettingsView(settings: settings)
+                        .onDisappear {
+                            viewModel.userSettings = settings
+                        }
                 }
             }
             .fullScreenCover(isPresented: .init(

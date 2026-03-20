@@ -40,5 +40,5 @@ struct NutritionHeader: View {
 }
 #Preview {
     @Previewable @State var selectedMacro: MacroType? = nil
-    NutritionHeader(summary: .init(totalCalories: 1500, totalCarbs: 140, totalProteins: 65, totalFats: 25), selectedMacro: $selectedMacro)
+    NutritionHeader(summary: .init(totalCalories: 1500, totalCarbs: 140, totalProteins: 65, totalFats: 25, caloriesGoal: 2000, carbsGoal: 100, proteinGoal: 50, fatGoal: 10), selectedMacro: $selectedMacro)
 }

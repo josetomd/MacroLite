@@ -13,7 +13,7 @@ class FoodListViewModel {
     var selectedDate: Date = .now
     var errorMessage: String?
     var showErrorMessage = false
-
+    var userSettings = UserSettings()
     var allEntries: [FoodEntry] = []
     private let foodRepository: FoodEntryRepositoryProtocol
 
@@ -26,7 +26,11 @@ class FoodListViewModel {
             totalCalories: allEntries.reduce(0) { $0 + $1.totalCalories },
             totalCarbs: allEntries.reduce(0) { $0 + $1.totalCarbs },
             totalProteins: allEntries.reduce(0) { $0 + $1.totalProteins },
-            totalFats: allEntries.reduce(0) { $0 + $1.totalFats }
+            totalFats: allEntries.reduce(0) { $0 + $1.totalFats },
+            caloriesGoal: userSettings.targetCalories,
+                        carbsGoal: userSettings.targetCarbs,
+                        proteinGoal: userSettings.targetProtein,
+                        fatGoal: userSettings.targetFats
         )
     }
 
