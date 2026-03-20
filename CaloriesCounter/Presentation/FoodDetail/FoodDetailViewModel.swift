@@ -47,4 +47,14 @@ class FoodDetailViewModel {
             return FoodEntry(from: product, amount: selectedAmount, mealType: selectedMealType)
         }
     }
+
+    func updateAmount(by num: Int) {
+        let amount = selectedAmount + num
+        if amount < 1 {
+            selectedAmount = 1
+        } else {
+            selectedAmount += num
+        }
+        HapticManager.shared.triggerImpact(style: .light)
+    }
 }

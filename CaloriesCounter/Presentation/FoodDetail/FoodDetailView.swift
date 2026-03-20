@@ -57,7 +57,9 @@ struct FoodDetailView: View {
                             .padding(.leading, 5)
 
                         HStack {
-                            Button(action: { if viewModel.selectedAmount > 1 { viewModel.selectedAmount -= 1 } }) {
+                            Button(action: {
+                                viewModel.updateAmount(by: -1)
+                            }) {
                                 Image(systemName: "minus.circle.fill")
                                     .font(.system(size: 35))
                                     .foregroundStyle(viewModel.selectedAmount > 1 ? Color.accentColor : .gray)
@@ -89,7 +91,9 @@ struct FoodDetailView: View {
 
                             Spacer()
 
-                            Button(action: { viewModel.selectedAmount += 1 }) {
+                            Button(action: {
+                                viewModel.updateAmount(by: 1)
+                            }) {
                                 Image(systemName: "plus.circle.fill")
                                     .font(.system(size: 35))
                                     .foregroundStyle(Color.accentColor)

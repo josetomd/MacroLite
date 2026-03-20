@@ -80,6 +80,7 @@ class FoodProductFormViewModel {
             do {
                 try repository.deleteProduct(id: id)
                 SoundManager.shared.play(sound: .delete)
+                HapticManager.shared.triggerImpact(style: .medium)
             } catch {
                 SoundManager.shared.play(sound: .error)
                 HapticManager.shared.triggerNotification(type: .error)
