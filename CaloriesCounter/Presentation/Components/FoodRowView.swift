@@ -44,6 +44,7 @@ struct FoodRowView: View {
                     .foregroundColor(.secondary)
             }
         }
+        .contentShape(.rect)
         .padding(.vertical, 10)
         .padding(.horizontal, 4)
     }
