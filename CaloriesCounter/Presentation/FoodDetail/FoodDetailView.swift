@@ -112,7 +112,7 @@ struct FoodDetailView: View {
 
                         Picker("Momento", selection: $viewModel.selectedMealType) {
                             ForEach(MealType.allCases, id: \.self) { type in
-                                Text(type.rawValue).tag(type)
+                                Text(type.label).tag(type)
                             }
                         }
                         .pickerStyle(.segmented)
